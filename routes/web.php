@@ -14,5 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/index/{project_id}', 'TestcasesController@index');
+Route::get('/index/{project_id}/{sheet_id}', 'TestcasesController@index');
 Route::get('/create', 'TestcasesController@create');
