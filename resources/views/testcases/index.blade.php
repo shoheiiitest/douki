@@ -11,11 +11,13 @@
             </tr>
         </thead>
         <tbody>
+            @foreach($caseContents as $k => $caseContent)
                 <tr>
-                    @for ($i = 0; $i < count($headers); $i++)
-                        <td></td>
-                    @endfor
+                    @foreach ($caseContent as $header_id => $content)
+                        <td>{{ $content }}</td>
+                    @endforeach
                 </tr>
+            @endforeach
         </tbody>
     </table>
     </div>
