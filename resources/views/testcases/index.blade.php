@@ -1,8 +1,7 @@
 @extends('Layouts.app')
 @section('title','検索')
 @section('content')
-    <div id="app">
-        <example-component></example-component>example-component>
+    <div id="CtrIndex">
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -12,9 +11,15 @@
             </tr>
         </thead>
         <tbody>
-
+                <tr>
+                    @for ($i = 0; $i < count($headers); $i++)
+                        <td></td>
+                    @endfor
+                </tr>
         </tbody>
     </table>
     </div>
-    <script src="{{ mix('js/app.js')  }}"></script>
+@endsection
+@section('script')
+    <script type="text/javascript"  src="{{ mix('js/controller/index.js')  }}" charset="utf-8"></script>
 @endsection

@@ -8,8 +8,8 @@ use App\Header;
 
 class TestcasesController extends Controller
 {
-        public function index(Request $request){
-            $project_id = "1";
+        public function index($project_id){
+            //$project_id = "1";
             $headers = new Header();
             $headers = $headers->getHeaders($project_id);
 //            $headers = $headers
