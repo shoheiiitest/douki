@@ -18,7 +18,7 @@
 </head>
 <body>
 <div class="py-3 my-3 bg-info">
-    <h1 class="text-center">テストケース一覧</h1>
+    <h1 class="text-center">@yield('title')</h1>
 </div>
 <div class="container">
     @yield('content')
