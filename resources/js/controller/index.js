@@ -4,7 +4,10 @@ var CtrIndex = new Vue({
     el: "#CtrIndex",
     data:{
         headers:[],
-        result:[],
+        sheet:[],
+        cases:[],
+        caseContents:[],
+        loading:true,
     },
     methods:{
         async getItems(){
@@ -13,15 +16,16 @@ var CtrIndex = new Vue({
                 project_id : 1,
                 sheet_id : 1
             };
-            await axios.get('/api/cases/getItems/1/1').then(function (response) {
-                console.log(this.headers);
-                this.headers = response.data.headers[0];
-                console.log(this.headers);
+            const result = await axios.get('/api/cases/getItems/1/1').then(function (response) {
+                return response.data;
             }).catch(function (error) {
                 return error;
             });
-            // this.result = result;
-            //console.log(result);
+            this.headers = result.headers;
+            this.sheet = result.sheet;
+            this.cases = result.cases;
+            this.caseContents = result.caseContents;
+            //this.loading = false;
         },
         loadLists(){
             this.getItems();

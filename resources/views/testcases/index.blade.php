@@ -2,22 +2,17 @@
 @section('title','テストケース一覧')
 @section('content')
     <div id="CtrIndex">
+        <span>@{{ sheet.sheet_name }}</span>
     <table class="table table-bordered">
         <thead>
             <tr>
-                @foreach($headers as $header)
-                <th>{{ $header->col_name  }}</th>
-                @endforeach
+                <th v-for="header in headers">@{{ header['col_name'] }}</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($caseContents as $k => $caseContent)
-                <tr>
-                    @foreach ($caseContent as $header_id => $content)
-                        <td>{{ $content }}</td>
-                    @endforeach
-                </tr>
-            @endforeach
+            <tr v-for="caseContent in caseContents">
+                <td v-for="content in caseContent">@{{ content }}</td>
+            </tr>
         </tbody>
     </table>
     </div>

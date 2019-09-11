@@ -857,14 +857,17 @@ var CtrIndex = new Vue({
   el: "#CtrIndex",
   data: {
     headers: [],
-    result: []
+    sheet: [],
+    cases: [],
+    caseContents: [],
+    loading: true
   },
   methods: {
     getItems: function () {
       var _getItems = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var data;
+        var data, result;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -875,19 +878,24 @@ var CtrIndex = new Vue({
                 };
                 _context.next = 3;
                 return axios.get('/api/cases/getItems/1/1').then(function (response) {
-                  console.log(this.headers);
-                  this.headers = response.data.headers[0];
-                  console.log(this.headers);
+                  return response.data;
                 })["catch"](function (error) {
                   return error;
                 });
 
               case 3:
+                result = _context.sent;
+                this.headers = result.headers;
+                this.sheet = result.sheet;
+                this.cases = result.cases;
+                this.caseContents = result.caseContents; //this.loading = false;
+
+              case 8:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, this);
       }));
 
       function getItems() {
@@ -915,7 +923,7 @@ var CtrIndex = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! G:\src\tms\resources\js\controller\index.js */"./resources/js/controller/index.js");
+module.exports = __webpack_require__(/*! /Users/imaishohei/tms/resources/js/controller/index.js */"./resources/js/controller/index.js");
 
 
 /***/ })
