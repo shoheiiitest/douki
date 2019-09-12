@@ -18,7 +18,7 @@ class CreateMCaseContentsTable extends Migration
             $table->integer('project_id');
             $table->integer('header_id');
             $table->integer('case_id');
-            $table->string('content');
+            $table->string('content')->nullable();
             $table->timestamps();
         });
     }

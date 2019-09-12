@@ -2,13 +2,8 @@
 @section('title','テストケース一覧')
 @section('content')
     <div id="CtrIndex">
-        <div v-show="loading" class="text-center" v-show="loading">
-            <div class="spinner-border text-info m-5" style="width: 10rem; height: 10rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-        <div v-show="!loading">
-            <span v-cloak >@{{ sheet.sheet_name }}</span>
+        <pulse-loader :loading="loading"></pulse-loader>
+        <span v-cloak >@{{ sheet.sheet_name }}</span>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -28,7 +23,6 @@
             </tr>
         </tbody>
     </table>
-        </div>
     </div>
 @endsection
 @section('script')

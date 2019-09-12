@@ -1,5 +1,8 @@
 
-var test_data = '';
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
+import RingLoader from 'vue-spinner/src/RingLoader.vue';
+import PacmanLoader from 'vue-spinner/src/PacmanLoader.vue';
+
 var CtrIndex = new Vue({
     el: "#CtrIndex",
     data:{
@@ -12,13 +15,14 @@ var CtrIndex = new Vue({
     },
     methods:{
         async getItems(){
-
-            var data = {
-                project_id : 1,
-                sheet_id : 1
-            };
             this.loading = true;
-            const result = await axios.get('/api/cases/getItems/1/1').then(function (response) {
+
+            var pathArray = window.location.pathname.split('/');
+            var project_id = pathArray[2];
+            var sheet_id = pathArray[3];
+
+            var requestPath = '/api/cases/getItems/' + String(project_id) + '/' + String(sheet_id);
+            const result = await axios.get(requestPath).then(function (response) {
                 return response.data;
             }).catch(function (error) {
                 return error;
@@ -31,8 +35,6 @@ var CtrIndex = new Vue({
         },
         loadLists(){
             this.getItems();
-            //console.log(this.headers);
-            // this.loading = false;
 
         },
         editColumns(index){
@@ -43,7 +45,7 @@ var CtrIndex = new Vue({
         },
         async submitContents(){
             this.loading = true;
-            this.col_show = false;
+            // this.col_show = false;
             var data = {
                 sheet_id:this.sheet.id,
                 caseContents:this.caseContents
@@ -55,6 +57,7 @@ var CtrIndex = new Vue({
             });
             if(flg){
                 this.getItems();
+                this.col_show = false;
 
             }else{
                 alert('DBの更新に失敗しました。');
@@ -68,5 +71,10 @@ var CtrIndex = new Vue({
     },
     mounted(){
         this.loadLists();
+    },
+    components: {
+        PulseLoader,
+        RingLoader,
+        PacmanLoader
     }
 });
