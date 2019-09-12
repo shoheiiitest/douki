@@ -84,12 +84,48 @@ class TestcasesController extends Controller
                 'cases' => $cases,
                 'caseContents' => $contents
             ];
-//            $response = [
-//              'test_value' => 'aiueo',
-//            ];
 
             return response()->json($response);
 
 
+        }
+
+        public function submit(Request $request)
+        {
+            $data = $request->all();
+            //$CaseContents = new CaseContent();
+            DB::beginTransaction();
+            try {
+
+                foreach ($data['caseContents'] as $case_id => $contents) {
+                    foreach ($contents as $header_id => $c) {
+                        $CaseContent = CaseContent::query()
+                            ->where('case_id',$case_id)
+                            ->where('header_id',$header_id)
+                            ->first();
+                        $CaseContent->content = $c;
+                        $CaseContent->save();
+                        if(!$CaseContent->save()){
+                            DB::rollBack();
+                            return response()->json([
+                                'success' => false,
+                            ]);
+                        }
+
+                    }
+                }
+                DB::commit();
+
+                return response()->json([
+                    'success' => true,
+                ]);
+
+                }catch (\Exception $ex) {
+                DB::rollBack();
+
+                return response()->json([
+                    'success' => false,
+                ]);
+            }
         }
 }
