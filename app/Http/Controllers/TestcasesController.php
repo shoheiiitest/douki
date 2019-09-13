@@ -12,6 +12,10 @@ use App\CaseContent;
 class TestcasesController extends Controller
 {
         public function index($project_id,$sheet_id){
+
+            $styles = [
+              'iconCursor' => 'cursor:pointer'
+            ];
             $headers = new Header();
             $headers = $headers->getHeaders($project_id);
 
@@ -41,7 +45,9 @@ class TestcasesController extends Controller
                 'headers' => $headers,
                 'sheet' => $sheet,
                 'cases' => $cases,
-                'caseContents' => $contents
+                'caseContents' => $contents,
+                'styles' => $styles,
+
             ]);
 
         }
