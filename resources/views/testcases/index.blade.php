@@ -12,7 +12,7 @@
         </thead>
         <tbody>
             <tr v-for="(caseContent,index) in caseContents">
-                <td  v-cloak v-for="(content,i) in caseContent" @click="editColumns(index)">
+                <td  v-cloak v-for="(content,i) in caseContent" @dblclick="editColumns(index)">
                     <div v-if="!col_show">@{{ content }}</div>
                     <div v-if="col_show">
                         <textarea v-model="caseContents[index][i]">@{{ content }}</textarea>
