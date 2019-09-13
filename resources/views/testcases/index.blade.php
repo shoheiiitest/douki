@@ -2,7 +2,7 @@
 @section('title','テストケース一覧')
 @section('content')
     <div id="CtrIndex">
-        <pulse-loader :loading="loading"></pulse-loader>
+        <rise-loader :loading="loading"></rise-loader>
         <span v-cloak >@{{ sheet.sheet_name }}</span>
     <table class="table table-bordered">
         <thead>

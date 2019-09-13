@@ -1,7 +1,5 @@
 
-import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
-import RingLoader from 'vue-spinner/src/RingLoader.vue';
-import PacmanLoader from 'vue-spinner/src/PacmanLoader.vue';
+//import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 
 var CtrIndex = new Vue({
     el: "#CtrIndex",
@@ -11,7 +9,9 @@ var CtrIndex = new Vue({
         cases:[],
         caseContents:[],
         loading:false,
-        col_show:false
+        color:'#2D93C5',
+        col_show:false,
+
     },
     methods:{
         async getItems(){
@@ -72,9 +72,5 @@ var CtrIndex = new Vue({
     mounted(){
         this.loadLists();
     },
-    components: {
-        PulseLoader,
-        RingLoader,
-        PacmanLoader
-    }
+
 });
