@@ -24,6 +24,8 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "bootstrap-honoka": "^4.3.1",
+        "bootstrap-nico": "^4.0.0",
         "vue-spinner": "^1.0.3"
     }
 }
