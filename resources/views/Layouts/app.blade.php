@@ -22,12 +22,12 @@
         [v-cloak] {
             display: none !important;
         }
+        @yield('style')
+        @yield('css')
     </style>
-    @yield('style')
-    @yield('css')
 </head>
 <body>
-<div class="py-3 my-3 bg-info">
+<div class="py-3 mt-3 mb-5 bg-info text-white">
     <h1 class="text-center">@yield('title')</h1>
 </div>
 <div class="container">

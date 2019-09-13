@@ -29,9 +29,9 @@ var CtrIndex = new Vue({
             });
             this.headers = result.headers;
             this.sheet = result.sheet;
-            this.cases = result.cases;
+            this.cases = result.cases; console.log(result.caseContents);
             this.caseContents = result.caseContents;
-            this.loading = false;
+            this.loading = false; console.log(this.caseContents);
         },
         loadLists(){
             this.getItems();
@@ -40,8 +40,9 @@ var CtrIndex = new Vue({
         editColumns(index){
             this.col_show = true;
         },
-        closeEdit(){
+        closeEdit(i){
             this.col_show = false;
+            console.log(i);
         },
         async submitContents(){
             this.loading = true;
