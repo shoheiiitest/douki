@@ -103,13 +103,11 @@ class TestcasesController extends Controller
             DB::beginTransaction();
             try {
 
-                foreach ($data['caseContents'] as $case_id => $contents) {
-                    foreach ($contents as $header_id => $c) {
                         $CaseContent = CaseContent::query()
-                            ->where('case_id',$case_id)
-                            ->where('header_id',$header_id)
+                            ->where('case_id',$data['case_id'])
+                            ->where('header_id',$data['header_id'])
                             ->first();
-                        $CaseContent->content = $c;
+                        $CaseContent->content = $data['content'];
                         $CaseContent->save();
                         if(!$CaseContent->save()){
                             DB::rollBack();
@@ -118,8 +116,6 @@ class TestcasesController extends Controller
                             ]);
                         }
 
-                    }
-                }
                 DB::commit();
 
                 return response()->json([

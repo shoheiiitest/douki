@@ -29,27 +29,33 @@ var CtrIndex = new Vue({
             });
             this.headers = result.headers;
             this.sheet = result.sheet;
-            this.cases = result.cases; console.log(result.caseContents);
+            this.cases = result.cases;
             this.caseContents = result.caseContents;
-            this.loading = false; console.log(this.caseContents);
+            this.loading = false;
         },
         loadLists(){
             this.getItems();
 
         },
-        editColumns(index){
-            this.col_show = true;
+        editColumns(caseId,headerId){
+            console.log(caseId + headerId);
+            // this.col_show = true;
+            $('.label'+ '_' + caseId + '_' + headerId).hide();
+            $('.edit'+ '_' + caseId + '_' + headerId).show();
+
         },
-        closeEdit(i){
-            this.col_show = false;
-            console.log(i);
+        closeEdit(caseId,headerId){
+            // this.col_show = false;
+            $('.label'+ '_' + caseId + '_' + headerId).show();
+            $('.edit'+ '_' + caseId + '_' + headerId).hide();
         },
-        async submitContents(){
+        async submitContents(caseId,headerId){
             this.loading = true;
             // this.col_show = false;
             var data = {
-                sheet_id:this.sheet.id,
-                caseContents:this.caseContents
+                case_id:caseId,
+                header_id:headerId,
+                content:this.caseContents[caseId][headerId]
             };
             var flg = await axios.post('/api/cases/submit',data).then(function (response) {
                 return response.data.success;
@@ -58,7 +64,7 @@ var CtrIndex = new Vue({
             });
             if(flg){
                 this.getItems();
-                this.col_show = false;
+                this.closeEdit(caseId,headerId);
 
             }else{
                 alert('DBの更新に失敗しました。');
