@@ -867,34 +867,50 @@ var CtrIndex = new Vue({
     getItems: function () {
       var _getItems = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(caseId, headerId) {
-        var pathArray, project_id, sheet_id, requestPath, result;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var flg,
+            caseId,
+            headerId,
+            pathArray,
+            project_id,
+            sheet_id,
+            requestPath,
+            result,
+            _args = arguments;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                flg = _args.length > 0 && _args[0] !== undefined ? _args[0] : false;
+                caseId = _args.length > 1 ? _args[1] : undefined;
+                headerId = _args.length > 2 ? _args[2] : undefined;
                 this.loading = true;
                 pathArray = window.location.pathname.split('/');
                 project_id = pathArray[2];
                 sheet_id = pathArray[3];
                 requestPath = '/api/cases/getItems/' + String(project_id) + '/' + String(sheet_id);
-                _context.next = 7;
+                _context.next = 10;
                 return axios.get(requestPath).then(function (response) {
                   return response.data;
                 })["catch"](function (error) {
                   return error;
                 });
 
-              case 7:
+              case 10:
                 result = _context.sent;
                 this.headers = result.headers;
                 this.sheet = result.sheet;
                 this.cases = result.cases;
                 this.caseContents = result.caseContents;
-                this.closeEdit(caseId, headerId);
+
+                if (flg) {
+                  this.closeEdit(caseId, headerId);
+                }
+
+                ;
                 this.loading = false;
 
-              case 14:
+              case 18:
               case "end":
                 return _context.stop();
             }
@@ -902,7 +918,7 @@ var CtrIndex = new Vue({
         }, _callee, this);
       }));
 
-      function getItems(_x, _x2) {
+      function getItems() {
         return _getItems.apply(this, arguments);
       }
 
@@ -914,9 +930,10 @@ var CtrIndex = new Vue({
     editColumns: function editColumns(caseId, headerId) {
       $('.label' + '_' + caseId + '_' + headerId).hide();
       $('.edit' + '_' + caseId + '_' + headerId).show();
-      this.caseContents[caseId][headerId] = this.caseContents[caseId][headerId].replace(/<br \/>/g, '');
+      this.caseContents[caseId][headerId] = this.caseContents[caseId][headerId].replace(/<br \/>/g, '\n');
     },
     closeEdit: function closeEdit(caseId, headerId) {
+      this.caseContents[caseId][headerId] = this.caseContents[caseId][headerId].replace(/\n/g, '<br />');
       $('.label' + '_' + caseId + '_' + headerId).show();
       $('.edit' + '_' + caseId + '_' + headerId).hide();
     },
@@ -946,7 +963,7 @@ var CtrIndex = new Vue({
                 flg = _context2.sent;
 
                 if (flg) {
-                  this.getItems(caseId, headerId);
+                  this.getItems(true, caseId, headerId);
                 } else {
                   alert('DBの更新に失敗しました。');
                 }
@@ -959,7 +976,7 @@ var CtrIndex = new Vue({
         }, _callee2, this);
       }));
 
-      function submitContents(_x3, _x4) {
+      function submitContents(_x, _x2) {
         return _submitContents.apply(this, arguments);
       }
 

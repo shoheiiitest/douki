@@ -12,7 +12,7 @@ var CtrIndex = new Vue({
 
     },
     methods:{
-        async getItems(caseId,headerId){
+        async getItems(flg=false,caseId,headerId){
             this.loading = true;
 
             var pathArray = window.location.pathname.split('/');
@@ -29,7 +29,7 @@ var CtrIndex = new Vue({
             this.sheet = result.sheet;
             this.cases = result.cases;
             this.caseContents = result.caseContents;
-            this.closeEdit(caseId,headerId);
+            if(flg){this.closeEdit(caseId,headerId);};
             this.loading = false;
         },
         loadLists(){
@@ -39,9 +39,10 @@ var CtrIndex = new Vue({
         editColumns(caseId,headerId){
             $('.label'+ '_' + caseId + '_' + headerId).hide();
             $('.edit'+ '_' + caseId + '_' + headerId).show();
-            this.caseContents[caseId][headerId] = this.caseContents[caseId][headerId].replace(/<br \/>/g,'');
+            this.caseContents[caseId][headerId] = this.caseContents[caseId][headerId].replace(/<br \/>/g,'\n');
         },
         closeEdit(caseId,headerId){
+            this.caseContents[caseId][headerId] = this.caseContents[caseId][headerId].replace(/\n/g,'<br />');
             $('.label'+ '_' + caseId + '_' + headerId).show();
             $('.edit'+ '_' + caseId + '_' + headerId).hide();
         },
@@ -59,7 +60,7 @@ var CtrIndex = new Vue({
             });
 
             if(flg){
-                this.getItems(caseId,headerId);
+                this.getItems(true,caseId,headerId);
 
             }else{
                 alert('DBの更新に失敗しました。');

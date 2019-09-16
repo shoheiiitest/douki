@@ -81,8 +81,8 @@ class TestcasesController extends Controller
             foreach ($caseIds as $key => $case_id){
                 $data[$case_id] = $caseContents->where('case_id',$case_id)->get();
                 foreach($data[$case_id] as $k => $item){
-//                    $contents[$case_id][$item->header_id] = str_replace($line_array,"<br />",$item->content);
-                    $contents[$case_id][$item->header_id] = nl2br($item->content);
+                    $contents[$case_id][$item->header_id] = str_replace($line_array,"<br />",$item->content);
+//                    $contents[$case_id][$item->header_id] = nl2br($item->content);
                 }
             }
 
