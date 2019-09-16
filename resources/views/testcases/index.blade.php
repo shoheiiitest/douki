@@ -13,11 +13,11 @@
         <tbody>
             <tr v-for="(caseContent,caseId) in caseContents" :class="'row' + '_' + caseId">
                 <td  v-cloak v-for="(content,headerId) in caseContent" @dblclick="editColumns(caseId,headerId)">
-                    <div :class="'label' + '_' + caseId + '_' +  headerId">@{{ content }}</div>
+                    <div :class="'label' + '_' + caseId + '_' +  headerId" v-html="content"></div>
                     <div style="display:none;" :class="'edit' + '_' + caseId + '_' +  headerId">
                         <i  @click.stop="closeEdit(caseId,headerId)" class="fas fa-times fa-lg text-danger mousepointer-hand float-right m-1"></i>
                         <i  @click.stop="submitContents(caseId,headerId)" class="fas fa-check-square fa-lg text-info mousepointer-hand float-right m-1"></i>
-                        <textarea v-model="caseContents[caseId][headerId]">@{{ content }}</textarea>
+                        <textarea v-model="caseContents[caseId][headerId]" v-html="content"></textarea>
                     </div>
                 </td>
             </tr>

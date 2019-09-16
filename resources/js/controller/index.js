@@ -1,6 +1,4 @@
 
-//import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
-
 var CtrIndex = new Vue({
     el: "#CtrIndex",
     data:{
@@ -14,7 +12,7 @@ var CtrIndex = new Vue({
 
     },
     methods:{
-        async getItems(){
+        async getItems(caseId,headerId){
             this.loading = true;
 
             var pathArray = window.location.pathname.split('/');
@@ -31,6 +29,7 @@ var CtrIndex = new Vue({
             this.sheet = result.sheet;
             this.cases = result.cases;
             this.caseContents = result.caseContents;
+            this.closeEdit(caseId,headerId);
             this.loading = false;
         },
         loadLists(){
@@ -38,20 +37,16 @@ var CtrIndex = new Vue({
 
         },
         editColumns(caseId,headerId){
-            console.log(caseId + headerId);
-            // this.col_show = true;
             $('.label'+ '_' + caseId + '_' + headerId).hide();
             $('.edit'+ '_' + caseId + '_' + headerId).show();
-
+            this.caseContents[caseId][headerId] = this.caseContents[caseId][headerId].replace(/<br \/>/g,'');
         },
         closeEdit(caseId,headerId){
-            // this.col_show = false;
             $('.label'+ '_' + caseId + '_' + headerId).show();
             $('.edit'+ '_' + caseId + '_' + headerId).hide();
         },
         async submitContents(caseId,headerId){
             this.loading = true;
-            // this.col_show = false;
             var data = {
                 case_id:caseId,
                 header_id:headerId,
@@ -62,14 +57,13 @@ var CtrIndex = new Vue({
             }).catch(function (error) {
                 return error;
             });
+
             if(flg){
-                this.getItems();
-                this.closeEdit(caseId,headerId);
+                this.getItems(caseId,headerId);
 
             }else{
                 alert('DBの更新に失敗しました。');
             }
-            this.loading = false;
         }
     },
     computed:{

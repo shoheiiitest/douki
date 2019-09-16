@@ -77,10 +77,12 @@ class TestcasesController extends Controller
             //$caseContents = $caseContents->getCaseContents($project_id,$sheet_id);
             $data = array();
             $contents = array();
+            $line_array = ["\r\n", "\r", "\n"];
             foreach ($caseIds as $key => $case_id){
                 $data[$case_id] = $caseContents->where('case_id',$case_id)->get();
                 foreach($data[$case_id] as $k => $item){
-                    $contents[$case_id][$item->header_id] = $item->content;
+//                    $contents[$case_id][$item->header_id] = str_replace($line_array,"<br />",$item->content);
+                    $contents[$case_id][$item->header_id] = nl2br($item->content);
                 }
             }
 
