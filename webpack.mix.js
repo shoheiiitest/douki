@@ -15,3 +15,4 @@ mix.js('resources/js/app.js', 'public/js');
 //    .sass('resources/sass/app.scss', 'public/css');
 
 mix.js('resources/js/controller/testcases/index.js', 'public/js/controller/testcases/index.js');
+mix.js('resources/js/controller/projects/create.js', 'public/js/controller/projects/create.js');

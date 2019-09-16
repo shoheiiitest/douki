@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::get('cases/getItems/{project_id}/{sheet_id}', 'TestcasesController@getItems');
 Route::post('cases/submit', 'TestcasesController@submit');
+Route::post('projects/submit', 'ProjectsController@submit');
 //Route::group(['prefix' => 'api'], function () {
 //    Route::get('cases/getItems/{project_id}/{sheet_id}', 'TestcasesController@index');
 //});
