@@ -24,6 +24,8 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@handsontable/vue": "^4.1.0",
+        "handsontable": "^7.1.1",
         "vue-spinner": "^1.0.3"
     }
 }
