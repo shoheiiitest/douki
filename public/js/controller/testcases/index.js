@@ -928,14 +928,15 @@ var CtrIndex = new Vue({
       this.getItems();
     },
     editColumns: function editColumns(caseId, headerId) {
-      $('.label' + '_' + caseId + '_' + headerId).hide();
-      $('.edit' + '_' + caseId + '_' + headerId).show();
+      $('.label_' + caseId + '_' + headerId).hide();
+      $('.edit_' + caseId + '_' + headerId).show();
       this.caseContents[caseId][headerId] = this.caseContents[caseId][headerId].replace(/<br \/>/g, '\n');
     },
     closeEdit: function closeEdit(caseId, headerId) {
       this.caseContents[caseId][headerId] = this.caseContents[caseId][headerId].replace(/\n/g, '<br />');
-      $('.label' + '_' + caseId + '_' + headerId).show();
-      $('.edit' + '_' + caseId + '_' + headerId).hide();
+      $('.edit_' + caseId + '_' + headerId + ' textarea').val(this.caseContents[caseId][headerId].replace(/<br \/>/g, '\n'));
+      $('.label_' + caseId + '_' + headerId).show();
+      $('.edit_' + caseId + '_' + headerId).hide();
     },
     submitContents: function () {
       var _submitContents = _asyncToGenerator(
@@ -950,7 +951,7 @@ var CtrIndex = new Vue({
                 data = {
                   case_id: caseId,
                   header_id: headerId,
-                  content: this.caseContents[caseId][headerId]
+                  content: $('.edit_' + caseId + '_' + headerId + ' textarea').val()
                 };
                 _context2.next = 4;
                 return axios.post('/api/cases/submit', data).then(function (response) {

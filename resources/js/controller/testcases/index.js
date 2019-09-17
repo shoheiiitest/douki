@@ -37,21 +37,22 @@ var CtrIndex = new Vue({
 
         },
         editColumns(caseId,headerId){
-            $('.label'+ '_' + caseId + '_' + headerId).hide();
-            $('.edit'+ '_' + caseId + '_' + headerId).show();
+            $('.label_' + caseId + '_' + headerId).hide();
+            $('.edit_' + caseId + '_' + headerId).show();
             this.caseContents[caseId][headerId] = this.caseContents[caseId][headerId].replace(/<br \/>/g,'\n');
         },
         closeEdit(caseId,headerId){
             this.caseContents[caseId][headerId] = this.caseContents[caseId][headerId].replace(/\n/g,'<br />');
-            $('.label'+ '_' + caseId + '_' + headerId).show();
-            $('.edit'+ '_' + caseId + '_' + headerId).hide();
+            $('.edit_' + caseId + '_' + headerId + ' textarea').val(this.caseContents[caseId][headerId].replace(/<br \/>/g,'\n'));
+            $('.label_' + caseId + '_' + headerId).show();
+            $('.edit_' + caseId + '_' + headerId).hide();
         },
         async submitContents(caseId,headerId){
             this.loading = true;
             var data = {
                 case_id:caseId,
                 header_id:headerId,
-                content:this.caseContents[caseId][headerId]
+                content:$('.edit_' + caseId + '_' + headerId + ' textarea').val(),
             };
             var flg = await axios.post('/api/cases/submit',data).then(function (response) {
                 return response.data.success;
