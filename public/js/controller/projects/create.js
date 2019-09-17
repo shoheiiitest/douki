@@ -856,7 +856,8 @@ var CtrProjects = new Vue({
   el: '#CtrProjects',
   data: {
     loading: false,
-    project_name: ''
+    project_name: '',
+    errors: []
   },
   methods: {
     submit: function () {
@@ -875,7 +876,7 @@ var CtrProjects = new Vue({
                 requestPath = '/api/projects/submit';
                 _context.next = 5;
                 return axios.post(requestPath, data).then(function (response) {
-                  return response.data.success;
+                  return response.data;
                 })["catch"](function (error) {
                   return error;
                 });
@@ -883,8 +884,11 @@ var CtrProjects = new Vue({
               case 5:
                 result = _context.sent;
 
-                if (result) {
+                if (result.success) {
                   location.href = '/';
+                } else if (result.message != undefined) {
+                  this.errors = result.message;
+                  this.loading = false;
                 } else {
                   alert('エラーでござる');
                   this.loading = false;
