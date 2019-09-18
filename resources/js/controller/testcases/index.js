@@ -71,7 +71,6 @@ var CtrIndex = new Vue({
             $('.edit_' + caseId + '_' + headerId).hide();
         },
         async submitContents(caseId,headerId){
-            console.log(hot.getData(1,3));
             this.loading = true;
             var data = {
                 case_id:caseId,
