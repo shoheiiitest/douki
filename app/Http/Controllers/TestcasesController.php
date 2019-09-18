@@ -66,12 +66,14 @@ class TestcasesController extends Controller
             $sheet = new Sheet();
             $sheet = $sheet->getSheet($project_id,$sheet_id);
 
-            $cases = new Cases();
-            $cases = $cases->getCases($sheet_id);
+            $casesObj = new Cases();
+            $casesObj = $casesObj->getCases($sheet_id);
+            $cases = [];
 
             $caseIds = array();
-            for ($i=0; $i <count($cases); $i++){
-                $caseIds[$i] = $cases[$i]->id;
+            for ($i=0; $i <count($casesObj); $i++){
+                $caseIds[$i] = $casesObj[$i]->id;
+                $cases[$casesObj[$i]->id] = $casesObj[$i];
             }
             $caseContents = new CaseContent();
             //$caseContents = $caseContents->getCaseContents($project_id,$sheet_id);

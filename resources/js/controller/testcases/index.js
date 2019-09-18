@@ -1,7 +1,31 @@
+import { HotTable, HotColumn } from '@handsontable/vue';
+import Handsontable from 'handsontable';
 
 var CtrIndex = new Vue({
     el: "#CtrIndex",
     data:{
+        hotSettings: {
+            data: [
+                // ['one', 'two', 'three'],
+                // ['four', 'five', 'six'],
+                // ['seven', 'eight', 'nine']
+            ],
+            rowHeaders: true,
+            colHeaders: true,
+            filters: true,
+            dropdownMenu: true,
+            //colWidths: 200, 列幅を指定
+            contextMenu: true,
+            manualColumnResize: true,
+            // minSpareCols: 2,
+            minSpareRows: 3,
+            stretchH: 'last',
+            licenseKey: 'non-commercial-and-evaluation',
+        },
+        secondColumnSettings: {
+            title: 'Second column header'
+        },
+        root:'testHot',
         headers:[],
         sheet:[],
         cases:[],
@@ -9,6 +33,7 @@ var CtrIndex = new Vue({
         loading:false,
         color:'#2D93C5',
         col_show:false,
+        hot:[]
 
     },
     methods:{
@@ -29,12 +54,15 @@ var CtrIndex = new Vue({
             this.sheet = result.sheet;
             this.cases = result.cases;
             this.caseContents = result.caseContents;
-            if(flg){this.closeEdit(caseId,headerId);};
+            if(flg){this.closeEdit(caseId,headerId);}
+            // this.loadExcel();
             this.loading = false;
         },
-        loadLists(){
-            this.getItems();
-
+        async loadLists(){
+            await this.getItems();
+            this.hotSettings.data = this.loadExcel();
+            // await this.loadExcel();
+            // console.log(this.hot.getData());
         },
         editColumns(caseId,headerId){
             $('.label_' + caseId + '_' + headerId).hide();
@@ -48,6 +76,7 @@ var CtrIndex = new Vue({
             $('.edit_' + caseId + '_' + headerId).hide();
         },
         async submitContents(caseId,headerId){
+            console.log(hot.getData(1,3));
             this.loading = true;
             var data = {
                 case_id:caseId,
@@ -66,7 +95,38 @@ var CtrIndex = new Vue({
             }else{
                 alert('DBの更新に失敗しました。');
             }
-        }
+        },
+        loadExcel(){
+            var data = [];
+            var headers = [];
+            var contents = [];
+            var rowContents = [];
+            var length = this.headers.length;
+            for(var i=0; i<length; i++){
+                headers[i] = this.headers[i].col_name;
+            }
+            data[0] = headers;
+            var keys = [];
+            var s = 0;
+            Object.keys(this.cases).forEach(function(key){
+               keys[s] = key;
+               s++;
+            });
+            for(var i=0; i<keys.length; i++){
+
+                for(var h=0; h<length; h++){
+                    rowContents[h] = this.caseContents[keys[i]][this.headers[h].id].replace(/<br \/>/g,'\n');
+                }
+                contents[i] = $.extend(true, [], rowContents);
+                data[i+1] = contents[i];
+            }
+            return data;
+        },
+        getCellData(){
+            // this.$refs.testHot.hotInstance.loadData([['new', 'data']]);
+            console.log(this.$refs.testHot.hotInstance.getData());
+            console.log(this.$refs.testHot.hotInstance.getData()[1]);
+        },
     },
     computed:{
 
@@ -75,5 +135,10 @@ var CtrIndex = new Vue({
     mounted(){
         this.loadLists();
     },
+
+    components:{
+        HotTable,
+        HotColumn
+    }
 
 });

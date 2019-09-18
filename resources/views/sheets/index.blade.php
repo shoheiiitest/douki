@@ -24,13 +24,18 @@
 
     var container = document.getElementById('CtrSheets');
     var hot = new Handsontable(container, {
-    data: data,
-    rowHeaders: true,
-    colHeaders: true,
-    filters: true,
-    dropdownMenu: true,
+        data: data,
+        rowHeaders: true,
+        colHeaders: true,
+        filters: true,
+        dropdownMenu: true,
+        //colWidths: 200, 列幅を指定
+        contextMenu: true,
+        manualColumnResize: true,
+        // minSpareCols: 2,
+        minSpareRows: 3,
     // licenseKey: '00000-00000-00000-00000-00000'
-    licenseKey: 'non-commercial-and-evaluation'
+        licenseKey: 'non-commercial-and-evaluation'
 
     });
     </script>
