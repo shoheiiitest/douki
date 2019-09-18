@@ -920,7 +920,7 @@ var CtrProjects = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! G:\src\tms\resources\js\controller\projects\create.js */"./resources/js/controller/projects/create.js");
+module.exports = __webpack_require__(/*! /Users/imaishohei/tms/resources/js/controller/projects/create.js */"./resources/js/controller/projects/create.js");
 
 
 /***/ })
