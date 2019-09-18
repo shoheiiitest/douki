@@ -30,7 +30,6 @@ class TestcasesController extends Controller
                 $caseIds[$i] = $cases[$i]->id;
             }
             $caseContents = new CaseContent();
-            //$caseContents = $caseContents->getCaseContents($project_id,$sheet_id);
             $data = array();
             $contents = array();
             foreach ($caseIds as $key => $case_id){
@@ -39,7 +38,6 @@ class TestcasesController extends Controller
                     $contents[$case_id][$item->header_id] = $item->content;
                 }
             }
-//           dd($contents);
 
             return view('testcases/index',[
                 'headers' => $headers,
@@ -76,7 +74,6 @@ class TestcasesController extends Controller
                 $cases[$casesObj[$i]->id] = $casesObj[$i];
             }
             $caseContents = new CaseContent();
-            //$caseContents = $caseContents->getCaseContents($project_id,$sheet_id);
             $data = array();
             $contents = array();
             $line_array = ["\r\n", "\r", "\n"];
@@ -103,7 +100,6 @@ class TestcasesController extends Controller
         public function submit(Request $request)
         {
             $data = $request->all();
-            //$CaseContents = new CaseContent();
             DB::beginTransaction();
             try {
 

@@ -5,13 +5,9 @@ var CtrIndex = new Vue({
     el: "#CtrIndex",
     data:{
         hotSettings: {
-            data: [
-                // ['one', 'two', 'three'],
-                // ['four', 'five', 'six'],
-                // ['seven', 'eight', 'nine']
-            ],
+            data: [],
             rowHeaders: true,
-            colHeaders: true,
+            colHeaders: [],
             filters: true,
             dropdownMenu: true,
             //colWidths: 200, 列幅を指定
@@ -55,14 +51,13 @@ var CtrIndex = new Vue({
             this.cases = result.cases;
             this.caseContents = result.caseContents;
             if(flg){this.closeEdit(caseId,headerId);}
-            // this.loadExcel();
             this.loading = false;
         },
         async loadLists(){
             await this.getItems();
+            this.hotSettings.colHeaders = this.getHeaders();
             this.hotSettings.data = this.loadExcel();
-            // await this.loadExcel();
-            // console.log(this.hot.getData());
+
         },
         editColumns(caseId,headerId){
             $('.label_' + caseId + '_' + headerId).hide();
@@ -96,6 +91,14 @@ var CtrIndex = new Vue({
                 alert('DBの更新に失敗しました。');
             }
         },
+        getHeaders(){
+            var headers = [];
+            var length = this.headers.length;
+            for(var i=0; i<length; i++){
+                headers[i] = this.headers[i].col_name;
+            }
+            return headers;
+        },
         loadExcel(){
             var data = [];
             var headers = [];
@@ -105,7 +108,6 @@ var CtrIndex = new Vue({
             for(var i=0; i<length; i++){
                 headers[i] = this.headers[i].col_name;
             }
-            data[0] = headers;
             var keys = [];
             var s = 0;
             Object.keys(this.cases).forEach(function(key){
@@ -118,14 +120,13 @@ var CtrIndex = new Vue({
                     rowContents[h] = this.caseContents[keys[i]][this.headers[h].id].replace(/<br \/>/g,'\n');
                 }
                 contents[i] = $.extend(true, [], rowContents);
-                data[i+1] = contents[i];
+                data[i] = contents[i];
             }
             return data;
         },
         getCellData(){
             // this.$refs.testHot.hotInstance.loadData([['new', 'data']]);
             console.log(this.$refs.testHot.hotInstance.getData());
-            console.log(this.$refs.testHot.hotInstance.getData()[1]);
         },
     },
     computed:{

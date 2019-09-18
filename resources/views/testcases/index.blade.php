@@ -23,12 +23,10 @@
             </tr>
         </tbody>
     </table>
-{{--        <div id="example"></div>--}}
-{{--        <hot-table :settings="hotSettings"></hot-table>--}}
-        <hot-table :root="root" :settings="hotSettings" ref="testHot">
-
-        </hot-table>
-        <button @click="getCellData()">getCellData</button><br>
+        <div class="mb-5">
+            <hot-table :root="root" :settings="hotSettings" ref="testHot"></hot-table>
+        </div>
+        <button class="btn-info text-white mb-3  p-2 rounded-lg" @click="getCellData()">データゲットだぜ</button>
     </div>
 @endsection
 @section('style')
