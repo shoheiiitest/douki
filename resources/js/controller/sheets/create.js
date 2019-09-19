@@ -18,7 +18,7 @@ var CtrSheets = new Vue({
             contextMenu: true,
             manualColumnResize: true,
             // minSpareCols: 2,
-            minSpareRows: 20,
+            minSpareRows: 1,
             stretchH: 'last',
             licenseKey: 'non-commercial-and-evaluation',
         },
@@ -46,29 +46,31 @@ var CtrSheets = new Vue({
 
         },
 
-        async submit(){
-            // var data = {
-            //     project_name:this.project_name,
-            // };
-            // this.loading = true;
-            // var requestPath = '/api/projects/submit';
-            // const result = await axios.post(requestPath,data).then(function (response) {
-            //     return response.data;
-            // }).catch(function (error) {
-            //     return error;
-            // });
-            //
-            // if(result.success){
-            //     location.href='/';
-            // }else if(result.message != undefined){
-            //     this.errors = result.message;
-            //     this.loading = false;
-            // }else{
-            //     alert('エラーでござる');
-            //     this.loading = false;
-            // }
+        async submit(project_id){
+            var data = {
+                project_id: project_id,
+                sheet_name:this.sheet_name,
+                cases:this.$refs.testHot.hotInstance.getData(),
+            };
+            this.loading = true;
+            var requestPath = '/api/sheets/submit';
+            const result = await axios.post(requestPath,data).then(function (response) {
+                return response.data;
+            }).catch(function (error) {
+                return error;
+            });
 
-            console.log(this.$refs.testHot.hotInstance.getData());
+            if(result.success){
+                alert('成功でござる');
+            }else if(result.message != undefined){
+                this.errors = result.message;
+                this.loading = false;
+            }else{
+                alert('何かエラーがあるでござる');
+                this.loading = false;
+            }
+            this.loading = false;
+            console.log(result);
 
         },
     },

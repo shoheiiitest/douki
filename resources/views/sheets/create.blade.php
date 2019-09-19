@@ -9,13 +9,13 @@
             <span v-cloak v-if="errors.sheet_name != undefined" class="text-danger" v-html="errors['sheet_name'][0]"></span>
         </div>
         <div class="m-4">
-            <button @click="submit" class="btn-info text-white p-2 rounded-lg">登録する</button>
+            <button @click="submit({{ $project_id }})" class="btn-info text-white p-2 rounded-lg">登録する</button>
         </div>
         <div class="mb-5">
             <hot-table :root="root" :settings="hotSettings" ref="testHot"></hot-table>
         </div>
         <div class="m-4">
-            <button @click="submit" class="btn-info text-white p-2 rounded-lg">登録する</button>
+            <button @click="submit({{ $project_id }})" class="btn-info text-white p-2 rounded-lg">登録する</button>
         </div>
     </div>
 @endsection

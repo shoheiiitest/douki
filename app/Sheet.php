@@ -17,4 +17,12 @@ class Sheet extends Model
             ->first();
         return $data;
     }
+
+    public function getMaxSheetNo($project_id){
+        $max = DB::table('m_sheets')
+            ->where('m_sheets.project_id',$project_id)
+            ->max('sheet_no');
+
+        return $max+1;
+    }
 }
