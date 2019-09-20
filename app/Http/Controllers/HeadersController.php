@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Project;
 use App\Header;
@@ -29,14 +28,14 @@ class HeadersController extends Controller
         ]);
     }
 
-    public function submit(Request $request){
+    public function submitHeaders(Request $request){
         $messages = Lang::get('validation',[], 'ja'); // 取得したい言語を第3引数に設定
         $attributes = [
-                'project_name' => 'プロジェクト名'
+                'col_name' => '項目名'
         ];
         $data = $request->all();
         $ruleValid = [
-            'project_name' => 'required|max:20'
+            'col_name' => 'required|max:20'
         ];
         $validator = Validator::make( $data, $ruleValid,$messages,$attributes);
         if($validator->fails()){

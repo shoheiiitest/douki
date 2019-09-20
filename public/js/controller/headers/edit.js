@@ -857,7 +857,9 @@ var CtrIndex = new Vue({
   data: {
     loading: false,
     color: '#2D93C5',
-    headers: []
+    headers: [],
+    counter: 0,
+    add: ''
   },
   methods: {
     getItems: function () {
@@ -883,9 +885,11 @@ var CtrIndex = new Vue({
               case 6:
                 result = _context.sent;
                 this.headers = result.headers;
+                this.counter = this.headers.length;
                 this.loading = false;
+                console.log(this.headers.length);
 
-              case 9:
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -899,6 +903,75 @@ var CtrIndex = new Vue({
 
       return getItems;
     }(),
+    submitHeaders: function () {
+      var _submitHeaders = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var pathArray, project_id, data, requestPath, result;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                // if(!confirm('登録してよろしいでござるか？')){
+                //     return;
+                // }
+                this.loading = true;
+                pathArray = window.location.pathname.split('/');
+                project_id = pathArray[1];
+                data = {
+                  //data: this.headers,
+                  counter: this.counter,
+                  project_id: project_id
+                };
+                requestPath = '/api/headers/submitHeaders';
+                _context2.next = 7;
+                return axios.post(requestPath, data).then(function (response) {
+                  return response.data;
+                })["catch"](function (error) {
+                  return error;
+                });
+
+              case 7:
+                result = _context2.sent;
+
+                if (result.success) {
+                  this.getItems();
+                } else if (result.message != undefined) {
+                  this.errors = result.message;
+                  this.loading = false;
+                  console.log(this.errors);
+                } else {
+                  alert('エラーでござる');
+                  this.loading = false;
+                }
+
+              case 9:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function submitHeaders() {
+        return _submitHeaders.apply(this, arguments);
+      }
+
+      return submitHeaders;
+    }(),
+    addRow: function addRow(num) {
+      for (var i = 0; i < parseInt(num); i++) {
+        this.headers.push({
+          col_name: '',
+          created_at: '',
+          disp_flg: '',
+          id: '',
+          project_id: '',
+          updated_at: ''
+        });
+        this.counter++;
+      }
+    },
     loadLists: function loadLists() {
       this.getItems();
     }
