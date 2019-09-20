@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -913,7 +913,7 @@ var CtrProjects = new Vue({
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /*!**********************************************************!*\
   !*** multi ./resources/js/controller/projects/create.js ***!
   \**********************************************************/

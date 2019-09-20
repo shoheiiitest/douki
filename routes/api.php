@@ -17,6 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('cases/getItems/{project_id}/{sheet_id}', 'TestcasesController@getItems');
+Route::get('projects/getItems/', 'ProjectsController@getItems');
+Route::post('project/delete/', 'ProjectsController@delete');
 Route::post('cases/submit', 'TestcasesController@submit');
 Route::post('projects/submit', 'ProjectsController@submit');
 Route::post('sheets/submit', 'SheetsController@submit');

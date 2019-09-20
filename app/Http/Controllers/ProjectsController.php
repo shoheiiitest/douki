@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Project;
 use Illuminate\Support\Facades\Lang;
@@ -15,6 +16,30 @@ class ProjectsController extends Controller
         $projects = $projects->get();
         return view('projects/index',[
             'projects' => $projects
+        ]);
+    }
+
+    public function getItems(){
+        $projects = new Project();
+        $projects = $projects->orderBy('project_name','asc')->get();
+        return response()->json([
+            'projects' => $projects,
+        ]);
+    }
+
+    public function delete(Request $request){
+        $project_id = $request->all()['project_id'];
+        $project = new Project();
+        $project->destroy($project_id);
+//        if(!($project->destroy($project_id))){
+//            return response()->json([
+//               'success' => false,
+//               'message' => '削除に失敗しました。'
+//            ]);
+//        }
+
+        return response()->json([
+           'success' => true,
         ]);
     }
 

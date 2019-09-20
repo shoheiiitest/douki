@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/controller/projects/create.js": "/js/controller/projects/create.js",
+    "/js/controller/projects/index.js": "/js/controller/projects/index.js",
     "/js/controller/sheets/create.js": "/js/controller/sheets/create.js",
     "/js/controller/testcases/index.js": "/js/controller/testcases/index.js"
 }
