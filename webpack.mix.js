@@ -18,3 +18,4 @@ mix.js('resources/js/controller/testcases/index.js', 'public/js/controller/testc
 mix.js('resources/js/controller/projects/index.js', 'public/js/controller/projects/index.js');
 mix.js('resources/js/controller/projects/create.js', 'public/js/controller/projects/create.js');
 mix.js('resources/js/controller/sheets/create.js', 'public/js/controller/sheets/create.js');
+mix.js('resources/js/controller/headers/edit.js', 'public/js/controller/headers/edit.js');

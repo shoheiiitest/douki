@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -835,10 +835,10 @@ try {
 
 /***/ }),
 
-/***/ "./resources/js/controller/projects/index.js":
-/*!***************************************************!*\
-  !*** ./resources/js/controller/projects/index.js ***!
-  \***************************************************/
+/***/ "./resources/js/controller/headers/edit.js":
+/*!*************************************************!*\
+  !*** ./resources/js/controller/headers/edit.js ***!
+  \*************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -853,37 +853,39 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var CtrIndex = new Vue({
-  el: "#CtrProjects",
+  el: "#CtrHeaders",
   data: {
     loading: false,
     color: '#2D93C5',
-    projects: []
+    headers: []
   },
   methods: {
     getItems: function () {
       var _getItems = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var requestPath, result;
+        var pathArray, project_id, requestPath, result;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 this.loading = true;
-                requestPath = '/api/projects/getItems/';
-                _context.next = 4;
+                pathArray = window.location.pathname.split('/');
+                project_id = pathArray[1];
+                requestPath = '/api/' + project_id + '/headers/getItems/';
+                _context.next = 6;
                 return axios.get(requestPath).then(function (response) {
                   return response.data;
                 })["catch"](function (error) {
                   return error;
                 });
 
-              case 4:
+              case 6:
                 result = _context.sent;
-                this.projects = result.projects;
+                this.headers = result.headers;
                 this.loading = false;
 
-              case 7:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -897,61 +899,6 @@ var CtrIndex = new Vue({
 
       return getItems;
     }(),
-    deleteProject: function () {
-      var _deleteProject = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(project_id) {
-        var data, result;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                if (confirm('削除してよろしいでござるか？')) {
-                  _context2.next = 2;
-                  break;
-                }
-
-                return _context2.abrupt("return");
-
-              case 2:
-                this.loading = true;
-                data = {
-                  project_id: project_id
-                };
-                _context2.next = 6;
-                return axios.post('/api/project/delete', data).then(function (response) {
-                  return response.data;
-                })["catch"](function (error) {
-                  return error;
-                });
-
-              case 6:
-                result = _context2.sent;
-
-                if (result.success) {
-                  this.getItems();
-                } else {
-                  alert(result.message);
-                  this.loading = false;
-                }
-
-              case 8:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function deleteProject(_x) {
-        return _deleteProject.apply(this, arguments);
-      }
-
-      return deleteProject;
-    }(),
-    toEditHeaders: function toEditHeaders(project_id) {
-      location.href = project_id + '/headers/edit';
-    },
     loadLists: function loadLists() {
       this.getItems();
     }
@@ -965,14 +912,14 @@ var CtrIndex = new Vue({
 
 /***/ }),
 
-/***/ 2:
-/*!*********************************************************!*\
-  !*** multi ./resources/js/controller/projects/index.js ***!
-  \*********************************************************/
+/***/ 5:
+/*!*******************************************************!*\
+  !*** multi ./resources/js/controller/headers/edit.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! G:\src\tms\resources\js\controller\projects\index.js */"./resources/js/controller/projects/index.js");
+module.exports = __webpack_require__(/*! G:\src\tms\resources\js\controller\headers\edit.js */"./resources/js/controller/headers/edit.js");
 
 
 /***/ })
