@@ -6,7 +6,7 @@
 {{--        <div class="form-group row">--}}
 {{--            <button @click="submit" class="col-1 offset-11 btn-info text-white p-2 rounded-lg">登録する</button>--}}
 {{--        </div>--}}
-        <div v-for="(header,index) in headers" class="form-group row">
+        <div v-for="(header,index) in headers" class="form-group row border border-secondary rounded-lg p-2 bg-light">
                 <span v-cloak class="text-info text-center align-self-center col-1">項目@{{ index+1 }}</span>
                 <input type="text" class="form-control col-11" v-model="header['col_name']">
             <span v-cloak v-if="errors[index+'.col_name'] != undefined" class="col-11 offset-1 text-danger" v-html="errors[index+'.col_name'][0]"></span>
