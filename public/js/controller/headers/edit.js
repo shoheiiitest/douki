@@ -859,7 +859,8 @@ var CtrIndex = new Vue({
     color: '#2D93C5',
     headers: [],
     counter: 0,
-    add: ''
+    add: '',
+    errors: []
   },
   methods: {
     getItems: function () {
@@ -887,9 +888,8 @@ var CtrIndex = new Vue({
                 this.headers = result.headers;
                 this.counter = this.headers.length;
                 this.loading = false;
-                console.log(this.headers.length);
 
-              case 11:
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -912,26 +912,31 @@ var CtrIndex = new Vue({
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                // if(!confirm('登録してよろしいでござるか？')){
-                //     return;
-                // }
+                if (confirm('登録してよろしいでござるか？')) {
+                  _context2.next = 2;
+                  break;
+                }
+
+                return _context2.abrupt("return");
+
+              case 2:
                 this.loading = true;
                 pathArray = window.location.pathname.split('/');
                 project_id = pathArray[1];
                 data = {
-                  //data: this.headers,
+                  data: this.headers,
                   counter: this.counter,
                   project_id: project_id
                 };
                 requestPath = '/api/headers/submitHeaders';
-                _context2.next = 7;
+                _context2.next = 9;
                 return axios.post(requestPath, data).then(function (response) {
                   return response.data;
                 })["catch"](function (error) {
                   return error;
                 });
 
-              case 7:
+              case 9:
                 result = _context2.sent;
 
                 if (result.success) {
@@ -939,13 +944,12 @@ var CtrIndex = new Vue({
                 } else if (result.message != undefined) {
                   this.errors = result.message;
                   this.loading = false;
-                  console.log(this.errors);
                 } else {
                   alert('エラーでござる');
                   this.loading = false;
                 }
 
-              case 9:
+              case 11:
               case "end":
                 return _context2.stop();
             }
@@ -992,7 +996,7 @@ var CtrIndex = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! G:\src\tms\resources\js\controller\headers\edit.js */"./resources/js/controller/headers/edit.js");
+module.exports = __webpack_require__(/*! /Users/imaishohei/tms/resources/js/controller/headers/edit.js */"./resources/js/controller/headers/edit.js");
 
 
 /***/ })

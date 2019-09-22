@@ -8,8 +8,8 @@
 {{--        </div>--}}
         <div v-for="(header,index) in headers" class="form-group row">
                 <span v-cloak class="text-info text-center align-self-center col-1">項目@{{ index+1 }}</span>
-                <input type="text" class="form-control col-11" v-model="header.col_name">
-{{--            <span v-cloak v-if="errors.project_name != undefined" class="text-danger" v-html="errors['project_name'][0]"></span>--}}
+                <input type="text" class="form-control col-11" v-model="header['col_name']">
+            <span v-cloak v-if="errors[index+'.col_name'] != undefined" class="col-11 offset-1 text-danger" v-html="errors[index+'.col_name'][0]"></span>
         </div>
         <div class="m-4">
             <button @click="submitHeaders" class="float-right btn-info text-white p-2 rounded-lg">登録する</button>

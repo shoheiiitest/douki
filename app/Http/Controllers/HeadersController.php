@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Project;
 use App\Header;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +10,11 @@ use Illuminate\Support\Facades\Validator;
 
 class HeadersController extends Controller
 {
+    protected $fillable = [
+        'id'
+    ];
+
+
     public function edit($project_id){
         return view('headers/edit',[
 
@@ -23,41 +27,65 @@ class HeadersController extends Controller
             ->where('project_id',$project_id)
             ->orderBy('id','asc')
             ->get();
+
+        foreach ($data as $k => $v){
+            $data[$k]['col_name_'.$k] = $v->col_name;
+        }
         return response()->json([
             'headers' => $data,
         ]);
     }
 
     public function submitHeaders(Request $request){
-        $messages = Lang::get('validation',[], 'ja'); // 取得したい言語を第3引数に設定
-        $attributes = [
-                'col_name' => '項目名'
-        ];
         $data = $request->all();
+        $counter = $data['counter'];
+        $messages = Lang::get('validation',[], 'ja'); // 取得したい言語を第3引数に設定
+
+        for ($i=0; $i<$counter; $i++){
+            $attributes[strval($i).'.col_name'] = trans('public.headers.col_name').strval($i+1);
+
+        }
+
         $ruleValid = [
-            'col_name' => 'required|max:20'
+            '*.col_name' => 'required|max:10',
         ];
-        $validator = Validator::make( $data, $ruleValid,$messages,$attributes);
+        $validator = Validator::make( $data['data'], $ruleValid,$messages,$attributes);
         if($validator->fails()){
             return response()->json([
                 'success'=>FALSE,
-                'message'=> $validator->errors()
+                'message'=> $validator->errors(),
+                'data' => $data
             ]);
         }
 
-        $project_name = $request->all()['project_name'];
         DB::beginTransaction();
         try {
 
-            $project = new Project();
-            $project->project_name = $project_name;
-            $project->save();
+            $project_id = $data['project_id'];
+            $count = $data['counter'];
+            $headers = $data['data'];
+            foreach($headers as $k => $header){
+                $h = Header::firstOrNew(['id' => $header['id']]);
+//                $h->firstOrCreate(
+//                    ['id' => $header['id']],
+//                    [
+//                        'col_name' => $header['col_name'],
+//                        'project_id' => $project_id,
+//                        'disp_flg' => 1,
+//                    ]
+//                );
+                $h->col_name = $header['col_name'];
+                $h->project_id = $project_id;
+                $h->disp_flg = 1;
+                $h->save();
 
-            if(!$project->save()){
-                return response()->json([
-                    'success' => false,
-                ]);
+                if(!$h->save()){
+                    return response()->json([
+                        'success' => false,
+                    ]);
+                }
             }
+
 
             DB::commit();
 

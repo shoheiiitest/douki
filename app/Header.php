@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\DB;
 class Header extends Model
 {
     protected $table = "m_headers";
+    protected $fillable = [
+        'id',
+        'project_id',
+        'col_name',
+        'disp_flg',
+    ];
 
     public function getHeaders($project_id){
         $data = DB::table('m_headers')

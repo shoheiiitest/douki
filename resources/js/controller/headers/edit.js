@@ -8,6 +8,7 @@ var CtrIndex = new Vue({
         headers:[],
         counter:0,
         add:'',
+        errors:[],
 
 
     },
@@ -25,18 +26,17 @@ var CtrIndex = new Vue({
             this.headers = result.headers;
             this.counter = this.headers.length;
             this.loading = false;
-            console.log(this.headers.length);
         },
 
         async submitHeaders(){
-            // if(!confirm('登録してよろしいでござるか？')){
-            //     return;
-            // }
+            if(!confirm('登録してよろしいでござるか？')){
+                return;
+            }
             this.loading = true;
             var pathArray = window.location.pathname.split('/');
             var project_id = pathArray[1];
             var data = {
-                //data: this.headers,
+                data: this.headers,
                 counter: this.counter,
                 project_id: project_id,
             };
@@ -53,7 +53,6 @@ var CtrIndex = new Vue({
             }else if(result.message != undefined){
                 this.errors = result.message;
                 this.loading = false;
-                console.log(this.errors);
             }else{
                 alert('エラーでござる');
                 this.loading = false;
