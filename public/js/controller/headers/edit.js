@@ -7833,13 +7833,15 @@ var CtrIndex = new Vue({
     loading: false,
     color: '#2D93C5',
     headers: [],
+    col_types: [],
     counter: 0,
     add: '',
     errors: [],
     options: {
       animation: 300,
       handle: '.handle'
-    }
+    },
+    element: 'tbody'
   },
   methods: {
     getItems: function () {
@@ -7865,10 +7867,11 @@ var CtrIndex = new Vue({
               case 6:
                 result = _context.sent;
                 this.headers = result.headers;
+                this.col_types = result.col_types;
                 this.counter = this.headers.length;
                 this.loading = false;
 
-              case 10:
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -7982,7 +7985,7 @@ var CtrIndex = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! G:\src\tms\resources\js\controller\headers\edit.js */"./resources/js/controller/headers/edit.js");
+module.exports = __webpack_require__(/*! /Users/imaishohei/tms/resources/js/controller/headers/edit.js */"./resources/js/controller/headers/edit.js");
 
 
 /***/ })

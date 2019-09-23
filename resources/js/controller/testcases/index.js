@@ -6,6 +6,22 @@ var CtrIndex = new Vue({
     data:{
         hotSettings: {
             data: [],
+            dateFormat: 'YYYY/DD/MM',
+            columns:[
+                {type:'date'},
+                {type:'date'},
+                {type:'date'},
+                {type:'date'},
+                {type:'date'},
+                {
+                    type:'autocomplete',
+                    source:['Audi', 'BMW', 'Chrysler', 'Citroen', 'Mercedes', 'Nissan', 'Opel', 'Suzuki', 'Toyota', 'Volvo'],
+                    strict: false
+                },
+                {type:'numeric'},
+                {type:'text'},
+                {type:'text'},
+            ],
             rowHeaders: true,
             colHeaders: [],
             filters: true,

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Project;
+use App\Header;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -78,6 +79,23 @@ class ProjectsController extends Controller
                 return response()->json([
                     'success' => false,
                 ]);
+            }
+
+            $headers = config('params.headers.defaults');
+            foreach($headers as $i => $header){
+                $headerObj = new Header();
+                $headerObj->project_id = $project->id;
+                $headerObj->col_name = $header['col_name'];
+                $headerObj->col_type = $header['col_type'];
+                $headerObj->order_num = $i+1;
+                $headerObj->disp_flg = 1;
+                $headerObj->save();
+
+                if(!$headerObj->save()){
+                    return response()->json([
+                        'success' => false,
+                    ]);
+                }
             }
 
             DB::commit();

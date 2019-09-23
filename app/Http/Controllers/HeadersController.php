@@ -28,11 +28,14 @@ class HeadersController extends Controller
             ->orderBy('order_num','asc')
             ->get();
 
+        $col_types = config('params.headers.col_types');
+
 //        foreach ($data as $k => $v){
 //            $data[$k]['col_name_'.$k] = $v->col_name;
 //        }
         return response()->json([
             'headers' => $data,
+            'col_types' => $col_types,
         ]);
     }
 

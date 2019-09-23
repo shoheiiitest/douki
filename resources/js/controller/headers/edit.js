@@ -6,6 +6,7 @@ var CtrIndex = new Vue({
         loading:false,
         color:'#2D93C5',
         headers:[],
+        col_types:[],
         counter:0,
         add:'',
         errors:[],
@@ -13,6 +14,7 @@ var CtrIndex = new Vue({
             animation:300,
             handle:'.handle',
         },
+        element:'tbody',
 
 
     },
@@ -28,6 +30,7 @@ var CtrIndex = new Vue({
                 return error;
             });
             this.headers = result.headers;
+            this.col_types = result.col_types;
             this.counter = this.headers.length;
             this.loading = false;
         },
