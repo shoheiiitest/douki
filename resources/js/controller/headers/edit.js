@@ -1,4 +1,4 @@
-
+import draggable from 'vuedraggable'
 
 var CtrIndex = new Vue({
     el: "#CtrHeaders",
@@ -9,6 +9,10 @@ var CtrIndex = new Vue({
         counter:0,
         add:'',
         errors:[],
+        options:{
+            animation:300,
+            handle:'.handle',
+        },
 
 
     },
@@ -68,11 +72,18 @@ var CtrIndex = new Vue({
                     created_at :'',
                     disp_flg :'',
                     id :'',
+                    order_num:'',
                     project_id :'',
                     updated_at :'',
                 });
                 this.counter++;
             }
+
+        },
+
+        moveOrder(e){
+          console.log(e);
+          console.log(this.lists);
 
         },
 
@@ -91,7 +102,7 @@ var CtrIndex = new Vue({
     },
 
     components:{
-
+        draggable,
     }
 
 });

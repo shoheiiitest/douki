@@ -25,12 +25,12 @@ class HeadersController extends Controller
         $headers = new Header();
         $data = $headers
             ->where('project_id',$project_id)
-            ->orderBy('id','asc')
+            ->orderBy('order_num','asc')
             ->get();
 
-        foreach ($data as $k => $v){
-            $data[$k]['col_name_'.$k] = $v->col_name;
-        }
+//        foreach ($data as $k => $v){
+//            $data[$k]['col_name_'.$k] = $v->col_name;
+//        }
         return response()->json([
             'headers' => $data,
         ]);

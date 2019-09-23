@@ -26,6 +26,7 @@
     "dependencies": {
         "@handsontable/vue": "^4.1.0",
         "handsontable": "^7.1.1",
-        "vue-spinner": "^1.0.3"
+        "vue-spinner": "^1.0.3",
+        "vuedraggable": "^2.23.1"
     }
 }

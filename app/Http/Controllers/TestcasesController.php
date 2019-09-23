@@ -33,7 +33,11 @@ class TestcasesController extends Controller
             $data = array();
             $contents = array();
             foreach ($caseIds as $key => $case_id){
-                $data[$case_id] = $caseContents->where('case_id',$case_id)->get();
+                $data[$case_id] = $caseContents
+                    ->leftjoin('m_headers', 'm_case_contents.header_id', '=', 'm_headers.id')
+                    ->where('m_case_contents.case_id',$case_id)
+                    ->orderBy('m_headers.order_num','asc')
+                    ->get();
                 foreach($data[$case_id] as $k => $item){
                     $contents[$case_id][$item->header_id] = $item->content;
                 }
@@ -78,7 +82,11 @@ class TestcasesController extends Controller
             $contents = array();
             $line_array = ["\r\n", "\r", "\n"];
             foreach ($caseIds as $key => $case_id){
-                $data[$case_id] = $caseContents->where('case_id',$case_id)->get();
+                $data[$case_id] = $caseContents
+                    ->leftjoin('m_headers', 'm_case_contents.header_id', '=', 'm_headers.id')
+                    ->where('m_case_contents.case_id',$case_id)
+                    ->orderBy('m_headers.order_num','asc')
+                    ->get();
                 foreach($data[$case_id] as $k => $item){
                     $contents[$case_id][$item->header_id] = str_replace($line_array,"<br />",$item->content);
 //                    $contents[$case_id][$item->header_id] = nl2br($item->content);

@@ -19,6 +19,7 @@ class Header extends Model
         $data = DB::table('m_headers')
             ->where('m_headers.project_id', '=', $project_id)
             ->where('m_headers.disp_flg', '=', '1')
+            ->orderBy('order_num','asc')
             ->get();
         return $data;
     }
