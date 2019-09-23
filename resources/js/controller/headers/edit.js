@@ -90,6 +90,31 @@ var CtrIndex = new Vue({
 
         },
 
+        async editDispFlg(index,header_id){
+            this.loading = true;
+            var disp_flg = $('#customSwitch_'+ header_id).prop('checked') ? 1:0;
+            var data = {
+                header_id:header_id,
+                disp_flg:disp_flg
+            };
+
+            var requestPath = '/api/headers/editDispFlg';
+            const result = await axios.post(requestPath,data).then(function (response) {
+                return response.data;
+            }).catch(function (error) {
+                return error;
+            });
+
+            if(result.success){
+                this.headers[index] = result.header;
+                this.loading = false;
+            }else{
+                alert('エラーでござる');
+                this.loading = false;
+            }
+
+        },
+
         loadLists(){
             this.getItems();
 

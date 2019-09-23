@@ -14,11 +14,11 @@
         <draggable @start="moveOrder" @end="moveOrder" :options="options">
         <div v-for="(header,index) in headers" :key="index" :data-column-id="header.id" class="form-group row border-bottom border-secondary bg-light m-auto p-2">
             <div class="col-1 m-auto handle"><i class="fa fa-align-justify fa-2x reorder-select ui-sortable-handle"></i></div>
-            <div class="col-1 custom-control custom-switch align-self-center">
-                <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                <label class="custom-control-label" for="customSwitch1">表示</label>
+            <div class="col-2 custom-control custom-switch align-self-center">
+                <input @click="editDispFlg(index,header.id)" type="checkbox" class="custom-control-input" :id="'customSwitch_' + header.id" :checked="(header.disp_flg==1) ? true:false">
+                <label v-cloak class="custom-control-label" :for="'customSwitch_' + header.id">@{{ header.disp_text = header.disp_flg ==1 ? '使用中':'未使用' }}</label>
             </div>
-            <span v-cloak class="text-left text-info align-self-center col-6">@{{ header['col_name'] }}</span>
+            <span v-cloak class="text-left text-info align-self-center col-5">@{{ header['col_name'] }}</span>
             <span v-cloak class="text-left text-info align-self-center col-2">@{{ col_types[header.col_type] }}</span>
             <button class="btn btn-info form-control offset-1 col-1 m-auto">編集</button>
             {{--<span v-cloak v-if="errors[index+'.col_name'] != undefined" class="col-11 offset-1 text-danger" v-html="errors[index+'.col_name'][0]"></span>--}}

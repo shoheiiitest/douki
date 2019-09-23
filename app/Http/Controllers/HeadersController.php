@@ -104,4 +104,25 @@ class HeadersController extends Controller
             ]);
         };
     }
+
+    public function editDispFlg(Request $request){
+        $data = $request->all();
+        $header = new Header();
+        $header = $header->where('id',$data['header_id'])->first();
+        $header->disp_flg = $data['disp_flg'];
+
+        $header->save();
+
+        if(!$header->save()){
+            return response()->json([
+                'success' => false,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'header' => $header,
+
+        ]);
+    }
 }

@@ -7963,6 +7963,54 @@ var CtrIndex = new Vue({
       console.log(e);
       console.log(this.lists);
     },
+    editDispFlg: function () {
+      var _editDispFlg = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(index, header_id) {
+        var disp_flg, data, requestPath, result;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                this.loading = true;
+                disp_flg = $('#customSwitch_' + header_id).prop('checked') ? 1 : 0;
+                data = {
+                  header_id: header_id,
+                  disp_flg: disp_flg
+                };
+                requestPath = '/api/headers/editDispFlg';
+                _context3.next = 6;
+                return axios.post(requestPath, data).then(function (response) {
+                  return response.data;
+                })["catch"](function (error) {
+                  return error;
+                });
+
+              case 6:
+                result = _context3.sent;
+
+                if (result.success) {
+                  this.headers[index] = result.header;
+                  this.loading = false;
+                } else {
+                  alert('エラーでござる');
+                  this.loading = false;
+                }
+
+              case 8:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function editDispFlg(_x, _x2) {
+        return _editDispFlg.apply(this, arguments);
+      }
+
+      return editDispFlg;
+    }(),
     loadLists: function loadLists() {
       this.getItems();
     }
