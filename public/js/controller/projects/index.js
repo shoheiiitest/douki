@@ -906,7 +906,7 @@ var CtrIndex = new Vue({
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (confirm('削除してよろしいでござるか？')) {
+                if (confirm('このプロジェクトに紐づくシートやケースデータなどすべて削除されてしまうがよろしいでござるか？')) {
                   _context2.next = 2;
                   break;
                 }

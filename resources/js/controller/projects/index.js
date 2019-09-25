@@ -24,7 +24,7 @@ var CtrIndex = new Vue({
         },
 
         async deleteProject(project_id){
-            if(!confirm('削除してよろしいでござるか？')){
+            if(!confirm('このプロジェクトに紐づくシートやケースデータなどすべて削除されてしまうがよろしいでござるか？')){
                 return;
             }
             this.loading = true;

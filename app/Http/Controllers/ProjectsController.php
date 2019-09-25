@@ -6,6 +6,9 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Project;
 use App\Header;
+use App\Sheet;
+use App\Cases;
+use App\CaseContent;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -31,7 +34,16 @@ class ProjectsController extends Controller
     public function delete(Request $request){
         $project_id = $request->all()['project_id'];
         $project = new Project();
+        $headers = new Header();
+        $sheets = new Sheet();
+        $cases = new Cases();
+        $caseContents = new CaseContent();
+
         $project->destroy($project_id);
+        $headers->where('project_id',$project_id)->delete();
+        $sheets->where('project_id',$project_id)->delete();
+        $cases->where('project_id',$project_id)->delete();
+        $caseContents->where('project_id',$project_id)->delete();
 //        if(!($project->destroy($project_id))){
 //            return response()->json([
 //               'success' => false,
