@@ -10,14 +10,28 @@ use Illuminate\Support\Facades\Validator;
 
 class HeadersController extends Controller
 {
-    protected $fillable = [
-        'id'
-    ];
 
 
-    public function edit($project_id){
-        return view('headers/edit',[
+    public function list($project_id){
+        return view('headers/list',[
+            'project_id' => $project_id,
+        ]);
+    }
 
+    public function create($project_id){
+        $col_types = config('params.headers.col_types');
+        unset($col_types[0]);//"結果"はリストさせないので削除
+        return view('headers/create',[
+            'title' => 'カラム追加',
+//            'col_types' => $col_types,
+        ]);
+    }
+
+    public function getColTypes(){
+        $col_types = config('params.headers.col_types');
+        unset($col_types[0]);//"結果"はリストさせないので削除
+        return response()->json([
+            'col_types' => $col_types,
         ]);
     }
 
@@ -124,5 +138,33 @@ class HeadersController extends Controller
             'header' => $header,
 
         ]);
+    }
+
+
+    public function moveOrder(Request $request){
+        $headerIds = $request->all()['headerIds'];
+        foreach ($headerIds as $k => $headerId){
+            $header = new Header();
+            $header = $header->find($headerId);
+            $header->order_num = $k+1;
+
+            $header->save();
+
+            if(!$header->save()){
+                return response()->json([
+                    'success' => false,
+                ]);
+            }
+        }
+
+        $header = new Header();
+        $headers = $header->find($headerIds);
+
+        return response()->json([
+            'success' => true,
+            'headers' => $headers,
+
+        ]);
+
     }
 }

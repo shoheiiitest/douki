@@ -48,7 +48,7 @@ var CtrIndex = new Vue({
         },
 
         toEditHeaders(project_id){
-            location.href=project_id + '/headers/edit';
+            location.href=project_id + '/headers/list';
         },
 
          loadLists(){
