@@ -23,6 +23,31 @@ var CtrIndex = new Vue({
             this.loading = false;
 
         },
+
+        async submit(project_id){
+            this.loading = true;
+            var data = {
+              project_id : project_id,
+              col_name : this.col_name,
+              col_type : this.selecting,
+            };
+            var requestPath = '/api/headers/submit';
+            const result = await axios.post(requestPath,data).then(function (response) {
+                return response.data;
+            }).catch(function (error) {
+                return error;
+            });
+
+            if(result.success){
+                window.location.href = '/'+project_id+'/headers/list';
+            }else if(result.message != undefined){
+                this.errors = result.message;
+                this.loading = false;
+            }else{
+                alert('エラーでござる');
+                this.loading = false;
+            }
+        },
         // async getItems(){
         //     this.loading = true;
         //     var pathArray = window.location.pathname.split('/');

@@ -27,6 +27,7 @@ Route::get('headers/getColTypes/', 'HeadersController@getColTypes');
 Route::post('project/delete/', 'ProjectsController@delete');
 Route::post('cases/submit', 'TestcasesController@submit');
 Route::post('projects/submit', 'ProjectsController@submit');
+Route::post('headers/submit', 'HeadersController@submit');
 Route::post('sheets/submit', 'SheetsController@submit');
 Route::get('sheets/getHeaders/{project_id}', 'SheetsController@getHeaders');
 //Route::group(['prefix' => 'api'], function () {

@@ -23,7 +23,7 @@ class HeadersController extends Controller
         unset($col_types[0]);//"結果"はリストさせないので削除
         return view('headers/create',[
             'title' => 'カラム追加',
-//            'col_types' => $col_types,
+            'project_id' => $project_id,
         ]);
     }
 
@@ -51,6 +51,51 @@ class HeadersController extends Controller
             'headers' => $data,
             'col_types' => $col_types,
         ]);
+    }
+
+    public function submit(Request $request){
+        $data = $request->all();
+        $project_id = $data['project_id'];
+        $col_name = $data['col_name'];
+        $col_type = $data['col_type'];
+
+        $attributes = [
+          'col_name' => trans('public.headers.col_name')
+        ];
+
+        $ruleValid = [
+            'col_name' => 'required|max:10',
+        ];
+
+        $validator = Validator::make( $data, $ruleValid,[],$attributes);
+        if($validator->fails()) {
+            return response()->json([
+                'success' => FALSE,
+                'message' => $validator->errors(),
+            ]);
+        }
+
+        $header = new Header();
+        $order_num = $header->where('project_id',$project_id)->max('order_num') + 1;
+        $header->project_id = $project_id;
+        $header->col_name = $col_name;
+        $header->col_type = $col_type;
+        $header->order_num = $order_num;
+        $header->disp_flg = 1;
+        $header->save();
+
+        if(!$header->save()){
+            return response()->json([
+                'success' => false,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+        ]);
+
+
+
     }
 
     public function submitHeaders(Request $request){
@@ -83,14 +128,14 @@ class HeadersController extends Controller
             $headers = $data['data'];
             foreach($headers as $k => $header){
                 $h = Header::firstOrNew(['id' => $header['id']]);
-//                $h->firstOrCreate(
-//                    ['id' => $header['id']],
-//                    [
-//                        'col_name' => $header['col_name'],
-//                        'project_id' => $project_id,
-//                        'disp_flg' => 1,
-//                    ]
-//                );
+                $h->firstOrCreate(
+                    ['id' => $header['id']],
+                    [
+                        'col_name' => $header['col_name'],
+                        'project_id' => $project_id,
+                        'disp_flg' => 1,
+                    ]
+                );
                 $h->col_name = $header['col_name'];
                 $h->project_id = $project_id;
                 $h->disp_flg = 1;
