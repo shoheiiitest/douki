@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\DB;
 class CaseContent extends Model
 {
     protected $table = "m_case_contents";
+    protected $fillable = [
+        'id',
+        'project_id',
+        'header_id',
+        'sheet_id',
+        'case_id',
+    ];
 
 //    public function getCaseContents($caseIds){
 //        $data =  DB::table('m_case_contents')

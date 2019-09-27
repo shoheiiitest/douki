@@ -88,9 +88,11 @@ var CtrSheets = new Vue({
 
         },
 
-        async submit(project_id){
+        async submit(mode,project_id,sheet_id=null){
             var data = {
+                mode:mode,
                 project_id: project_id,
+                sheet_id:sheet_id,
                 sheet_name:this.sheet_name,
                 cases:this.$refs.testHot.hotInstance.getData(),
             };

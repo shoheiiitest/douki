@@ -99,6 +99,8 @@ class SheetsController extends Controller
 
     public function submit(Request $request){
         $data = $request->all();
+        $mode = $data['mode'];
+        $sheet_id = $data['sheet_id'];
         $project_id = $data['project_id'];
         $sheet_name = $data['sheet_name'];
         $cases_data = $data['cases'];
@@ -123,20 +125,26 @@ class SheetsController extends Controller
         try {
             //m_sheetsにレコード1件追加
             $Sheet = new Sheet();
-            $Sheet->project_id = $project_id;
-            $Sheet->sheet_name = $sheet_name;
-            $Sheet->sheet_no = $Sheet->getMaxSheetNo($project_id);
-            $Sheet->save();
-            if(!$Sheet->save()){
-                DB::rollBack();
-                return response()->json([
-                    'success' => false,
-                ]);
+            if($mode=='create'){
+                $Sheet->project_id = $project_id;
+                $Sheet->sheet_name = $sheet_name;
+                $Sheet->sheet_no = $Sheet->getMaxSheetNo($project_id);
+                $Sheet->save();
+                if(!$Sheet->save()){
+                    DB::rollBack();
+                    return response()->json([
+                        'success' => false,
+                    ]);
+                }
+
+                $sheet_id = $Sheet->id;
+                $sheet_no = $Sheet->sheet_no;
+
+            }else{
+                $sheet_no = $Sheet->find($sheet_id)->sheet_no;
             }
 
             //m_casesにヘッダー数分のレコードを追加
-            $sheet_id = $Sheet->id;
-            $sheet_no = $Sheet->sheet_no;
 
             $Header = new Header();
             $Headers = $Header
@@ -148,28 +156,41 @@ class SheetsController extends Controller
             $case_no = 1;
 
             foreach($cases_data as $index => $case){
-                if($index == (count($cases_data)-1) ){
+                if(($index == (count($cases_data)-1)) && $mode =='create' ){
                     break;
                 }
                 $Cases = new Cases();
-                $Cases->project_id = $project_id;
-                $Cases->sheet_id = $sheet_id;
-                $Cases->sheet_no = $sheet_no;
-                $Cases->case_no = $case_no;
-                $Cases->save();
+                $Cases = $Cases->updateOrCreate(
+                    ['case_no' => $case_no],
+                    [
+                        'project_id' => $project_id,
+                        'sheet_id' => $sheet_id,
+                        'sheet_no' => $sheet_no,
+                        'case_no' => $case_no
+                    ]
+                );
+//                $Cases->project_id = $project_id;
+//                $Cases->sheet_id = $sheet_id;
+//                $Cases->sheet_no = $sheet_no;
+//                $Cases->case_no = $case_no;
+//                $Cases->save();
 
-                if(!$Cases->save()){
-                    DB::rollBack();
-                    return response()->json([
-                        'success' => false,
-                    ]);
-                }
+//                if(!$Cases->save()){
+//                    DB::rollBack();
+//                    return response()->json([
+//                        'success' => false,
+//                    ]);
+//                }
                 $case_no++;
                 $case_id = $Cases->id;
 
                 //各ヘッダー項目に対してm_case_contentsにレコードを登録
                 foreach($Headers as $i => $h){
                     $CaseContent = new CaseContent();
+//                    $CaseContent->updateOrCreate(
+//                        [],
+//                        []
+//                    );
                     $CaseContent->project_id = $project_id;
                     $CaseContent->header_id = $h->id;
                     $CaseContent->sheet_id = $sheet_id;
