@@ -104,6 +104,11 @@ class SheetsController extends Controller
         $project_id = $data['project_id'];
         $sheet_name = $data['sheet_name'];
         $cases_data = $data['cases'];
+        $afterUpdateCount = count($cases_data);
+        if($mode=='edit'){
+            $Cases = new Cases();
+            $beforeUpdateCount = $Cases->where('sheet_id',$sheet_id)->count();
+        }
 
         $messages = Lang::get('validation',[], 'ja'); // 取得したい言語を第3引数に設定
         $attributes = [
@@ -125,10 +130,15 @@ class SheetsController extends Controller
         try {
             //m_sheetsにレコード1件追加
             $Sheet = new Sheet();
-            if($mode=='create'){
-                $Sheet->project_id = $project_id;
+            if($mode=='edit'){
+                $Sheet = $Sheet->find($sheet_id);
                 $Sheet->sheet_name = $sheet_name;
+            }else{
+                $Sheet->project_id = $project_id;
                 $Sheet->sheet_no = $Sheet->getMaxSheetNo($project_id);
+                $Sheet->sheet_name = $sheet_name;
+
+            }
                 $Sheet->save();
                 if(!$Sheet->save()){
                     DB::rollBack();
@@ -140,9 +150,6 @@ class SheetsController extends Controller
                 $sheet_id = $Sheet->id;
                 $sheet_no = $Sheet->sheet_no;
 
-            }else{
-                $sheet_no = $Sheet->find($sheet_id)->sheet_no;
-            }
 
             //m_casesにヘッダー数分のレコードを追加
 
@@ -156,12 +163,12 @@ class SheetsController extends Controller
             $case_no = 1;
 
             foreach($cases_data as $index => $case){
-                if(($index == (count($cases_data)-1)) && $mode =='create' ){
-                    break;
-                }
+//                if(($index == (count($cases_data)-1)) && $mode =='create' ){
+//                    break;
+//                }
                 $Cases = new Cases();
                 $Cases = $Cases->updateOrCreate(
-                    ['case_no' => $case_no],
+                    ['sheet_id' => $sheet_id,'case_no' => $case_no],
                     [
                         'project_id' => $project_id,
                         'sheet_id' => $sheet_id,
@@ -187,24 +194,48 @@ class SheetsController extends Controller
                 //各ヘッダー項目に対してm_case_contentsにレコードを登録
                 foreach($Headers as $i => $h){
                     $CaseContent = new CaseContent();
-//                    $CaseContent->updateOrCreate(
-//                        [],
-//                        []
-//                    );
-                    $CaseContent->project_id = $project_id;
-                    $CaseContent->header_id = $h->id;
-                    $CaseContent->sheet_id = $sheet_id;
-                    $CaseContent->case_id = $case_id;
-                    $CaseContent->content = $cases_data[$index][$i];
-                    $CaseContent->save();
+                    $CaseContent->updateOrCreate(
+                        ['sheet_id' => $sheet_id, 'case_id' => $case_id, 'header_id' => $h->id],
+                        [
+                            'project_id' => $project_id,
+                            'header_id' => $h->id,
+                            'sheet_id' => $sheet_id,
+                            'case_id' => $case_id,
+                            'content' => $cases_data[$index][$i],
+                        ]
+                    );
+//                    $CaseContent->project_id = $project_id;
+//                    $CaseContent->header_id = $h->id;
+//                    $CaseContent->sheet_id = $sheet_id;
+//                    $CaseContent->case_id = $case_id;
+//                    $CaseContent->content = $cases_data[$index][$i];
+//                    $CaseContent->save();
 
-                    if(!$CaseContent->save()){
-                        DB::rollBack();
-                        return response()->json([
-                            'success' => false,
-                        ]);
-                    }
+//                    if(!$CaseContent->save()){
+//                        DB::rollBack();
+//                        return response()->json([
+//                            'success' => false,
+//                        ]);
+//                    }
                 }
+
+            }
+
+            if($mode=='edit' && ($afterUpdateCount < $beforeUpdateCount)){
+                $Cases = new Cases();
+                $CaseContent = new CaseContent();
+                $deleteCount = $beforeUpdateCount - $afterUpdateCount;
+                $Cases = $Cases->where('sheet_id',$sheet_id)->orderBy('case_no','asc')->get();
+                $deleteCaseIds = [];
+                for($i=$afterUpdateCount; $i<$beforeUpdateCount; $i++){
+                    $deleteCaseIds[$i] = $Cases[$i]->id;
+                    $Cases[$i]->delete();
+                }
+
+                foreach ($deleteCaseIds as $k => $case_id){
+                    $CaseContent->where('case_id',$case_id)->delete();
+                }
+
 
             }
 

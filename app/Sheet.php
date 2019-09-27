@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\DB;
 class Sheet extends Model
 {
     protected $table = "m_sheets";
+    protected $fillable = [
+        'id',
+        'project_id',
+        'sheet_no',
+        'sheet_name',
+    ];
 
     public function getSheet($project_id,$id){
         $data = DB::table('m_sheets')

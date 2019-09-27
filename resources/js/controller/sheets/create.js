@@ -20,7 +20,7 @@ var CtrSheets = new Vue({
             contextMenu: true,
             manualColumnResize: true,
             // minSpareCols: 2,
-            minSpareRows: 1,
+            // minSpareRows: 1,
             stretchH: 'last',
             licenseKey: 'non-commercial-and-evaluation',
         },
@@ -75,7 +75,7 @@ var CtrSheets = new Vue({
                 }
 
                 if(mode=='create'){
-                    this.hotSettings.data = Handsontable.helper.createEmptySpreadsheetData(20,this.hotSettings.colHeaders.length);
+                    this.hotSettings.data = Handsontable.helper.createEmptySpreadsheetData(5,this.hotSettings.colHeaders.length);
                 }else if(mode=='edit'){
                     this.sheet_name = result.sheet_name;
                     this.hotSettings.data = result.data;

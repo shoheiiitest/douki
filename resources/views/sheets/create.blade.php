@@ -12,7 +12,7 @@
             @if($mode=='create')
                 <button @click="submit('{{ $mode}}',{{ $project_id }})" class="btn-info text-white p-2 rounded-lg">登録する</button>
             @elseif($mode=='edit')
-                <button @click="submit({{ $mode.',' }}{{ $project_id.',' }}{{ $sheet_id }})" class="btn-info text-white p-2 rounded-lg">保存する</button>
+                <button @click="submit('{{ $mode }}',{{ $project_id }},{{ $sheet_id }})" class="btn-info text-white p-2 rounded-lg">保存する</button>
             @endif
         </div>
         <div class="mb-5">
@@ -22,7 +22,7 @@
             @if($mode=='create')
                 <button @click="submit('{{ $mode}}',{{ $project_id }})" class="btn-info text-white p-2 rounded-lg">登録する</button>
             @elseif($mode=='edit')
-                <button @click="submit({{ $mode.',' }}{{ $project_id.',' }}{{ $sheet_id }})" class="btn-info text-white p-2 rounded-lg">保存する</button>
+                <button @click="submit('{{ $mode }}',{{ $project_id }},{{ $sheet_id }})" class="btn-info text-white p-2 rounded-lg">保存する</button>
             @endif
         </div>
     </div>

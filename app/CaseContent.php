@@ -14,6 +14,7 @@ class CaseContent extends Model
         'header_id',
         'sheet_id',
         'case_id',
+        'content',
     ];
 
 //    public function getCaseContents($caseIds){
