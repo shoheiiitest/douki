@@ -8,7 +8,7 @@
         <ul>
         @foreach($sheets as $sheet)
         <li>
-            <a href='/cases/{{ $project_id."/" }}{{ $sheet->id }}'>{{ $sheet->sheet_name }}</a>
+            <a href='/sheets/edit/{{ $project_id."/" }}{{ $sheet->id }}'>{{ $sheet->sheet_name }}</a>
         </li>
         @endforeach
         </ul>

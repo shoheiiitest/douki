@@ -20,7 +20,6 @@ var CtrIndex = new Vue({
                 },
                 {type:'numeric'},
                 {type:'text'},
-                {type:'text'},
             ],
             rowHeaders: true,
             colHeaders: [],
@@ -137,6 +136,7 @@ var CtrIndex = new Vue({
                 contents[i] = $.extend(true, [], rowContents);
                 data[i] = contents[i];
             }
+            console.log(data);
             return data;
         },
         getCellData(){

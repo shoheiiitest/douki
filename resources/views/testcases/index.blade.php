@@ -1,5 +1,5 @@
 @extends('Layouts.app')
-@section('title','テストケース一覧')
+@section('title','シート編集')
 @section('content')
     <div id="CtrIndex">
         <rise-loader :loading="loading"></rise-loader>

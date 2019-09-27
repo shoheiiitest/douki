@@ -24,22 +24,77 @@ class SheetsController extends Controller
 
     public function create($project_id){
         return view('sheets/create',[
+            'mode' => 'create',
+            'title' => 'シート追加',
             'project_id' => $project_id,
         ]);
     }
 
-    public function getHeaders($project_id){
+    public function edit($project_id,$sheet_id){
+
+        return view('sheets/create',[
+            'mode' => 'edit',
+            'title' => 'シート編集',
+            'project_id' => $project_id,
+            'sheet_id' => $sheet_id,
+        ]);
+    }
+
+    public function getItems($mode,$project_id,$sheet_id = null){
         $headers = new Header();
-        $headers = $headers->where('project_id',$project_id)->orderBy('id','asc')->get();
+        $headers = $headers
+            ->where('project_id',$project_id)
+            ->where('disp_flg','1')
+            ->orderBy('order_num','asc')->get();
         $returnHeaders = [];
+        $retrunColTypes = [];
         for ($i=0; $i<count($headers); $i++){
             $returnHeaders[$i] = $headers[$i]->col_name;
+            $retrunColTypes[$i] = $headers[$i]->col_type;
         }
 
-        return response()->json([
-            'headers' => $returnHeaders,
-            'success' => true,
-        ]);
+        if($mode=='create'){
+            return response()->json([
+                'headers' => $returnHeaders,
+                'colTypes' => $retrunColTypes,
+                'success' => true,
+            ]);
+        }elseif($mode=='edit'){
+            $data = [];
+
+            $sheet = new Sheet();
+            $sheet_name = $sheet->find($sheet_id)->sheet_name;
+
+            $case = new Cases();
+            $caseIds = $case
+                ->where('sheet_id',$sheet_id)
+                ->pluck('id')
+                ->toArray();
+
+            foreach($caseIds as $index => $casId){
+                $case_contents = new CaseContent();
+                $case_contents = $case_contents
+                    ->join('m_headers','m_headers.id','m_case_contents.header_id')
+                    ->where('m_case_contents.case_id',$casId)
+                    ->where('m_headers.disp_flg','1')
+                    ->orderBy('m_headers.order_num','asc')
+                    ->get();
+                foreach($case_contents as $i => $case_content){
+                    $data[$index][$i] = $case_content->content;
+                }
+            }
+
+            return response()->json([
+                'headers' => $returnHeaders,
+                'sheet_name' => $sheet_name,
+                'colTypes' => $retrunColTypes,
+                'data' => $data,
+                'success' => true,
+            ]);
+
+
+        }
+
     }
 
     public function submit(Request $request){
@@ -117,6 +172,7 @@ class SheetsController extends Controller
                     $CaseContent = new CaseContent();
                     $CaseContent->project_id = $project_id;
                     $CaseContent->header_id = $h->id;
+                    $CaseContent->sheet_id = $sheet_id;
                     $CaseContent->case_id = $case_id;
                     $CaseContent->content = $cases_data[$index][$i];
                     $CaseContent->save();

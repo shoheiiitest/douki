@@ -19,6 +19,7 @@ Route::get('/projects/create', 'ProjectsController@create');
 Route::get('{project_id}/headers/list', 'HeadersController@list');
 Route::get('{project_id}/header/create', 'HeadersController@create');
 Route::get('/sheets/create/{project_id}', 'SheetsController@create');
+Route::get('/sheets/edit/{project_id}/{sheet_id}', 'SheetsController@edit');
 Route::get('/sheets/{project_id}', 'SheetsController@index');
 Route::get('/cases/{project_id}/{sheet_id}', 'TestcasesController@index');
 Route::get('/create', 'TestcasesController@create');

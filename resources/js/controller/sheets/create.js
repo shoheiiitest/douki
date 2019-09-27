@@ -10,6 +10,8 @@ var CtrSheets = new Vue({
         root:'testHot',
         hotSettings: {
             data: [],//Handsontable.helper.createSpreadsheetData(6, 10),
+            dateFormat: 'YYYY/MM/DD',
+            columns:[],
             rowHeaders: true,
             colHeaders: [],
             filters: true,
@@ -24,12 +26,17 @@ var CtrSheets = new Vue({
         },
     },
     methods:{
-        async getHeaders(){
+        async getItems(mode){
             this.loading = true;
             var pathArray = window.location.pathname.split('/');
             var project_id = pathArray[3];
+            var requestPath = '/api/sheets/getItems/'+ mode + '/' + project_id;
+            if(mode=='edit') {
+                var sheet_id = pathArray[4];
+                requestPath += '/' + sheet_id;
+            }
 
-            const result = await axios.get('/api/sheets/getHeaders/'+ project_id).then(function (response) {
+            const result = await axios.get(requestPath).then(function (response) {
                 return response.data;
             }).catch(function (error) {
                 return error;
@@ -37,7 +44,42 @@ var CtrSheets = new Vue({
 
             if(result.success){
                 this.hotSettings.colHeaders = result.headers;
-                this.hotSettings.data = Handsontable.helper.createEmptySpreadsheetData(20,this.hotSettings.colHeaders.length);
+                for(var i=0; i<result.headers.length; i++){
+                    switch (result.colTypes[i]) {
+                        case 0://結果
+                            this.hotSettings.columns[i] ={
+                                readOnly:true,
+                            };
+                            break;
+                        case 1:
+                            this.hotSettings.columns[i] ={type:'text'};
+                            break;
+                        case 2:
+                            this.hotSettings.columns[i] ={
+                                editor: 'select',
+                                selectOptions: ['Shohei', 'Ha', 'Tam', 'Tho']
+                            };
+                            break;
+                        case 3:
+                            this.hotSettings.columns[i] ={type:'date'};
+                            break;
+                        case 4:
+                            this.hotSettings.columns[i] ={
+                                editor: 'select',
+                                selectOptions: ['Kia', 'Nissan', 'Toyota', 'Honda']
+                            };
+                            break;
+
+                    }
+
+                }
+
+                if(mode=='create'){
+                    this.hotSettings.data = Handsontable.helper.createEmptySpreadsheetData(20,this.hotSettings.colHeaders.length);
+                }else if(mode=='edit'){
+                    this.sheet_name = result.sheet_name;
+                    this.hotSettings.data = result.data;
+                }
             }else{
                 alert('エラーでござる');
             }
@@ -70,13 +112,13 @@ var CtrSheets = new Vue({
                 this.loading = false;
             }
             this.loading = false;
-            console.log(result);
 
         },
     },
 
     mounted(){
-        this.getHeaders();
+        var mode = window.location.pathname.split('/')[2];
+        this.getItems(mode);
     },
 
     components:{
