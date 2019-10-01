@@ -4,6 +4,8 @@ import Handsontable from 'handsontable';
 var CtrSheets = new Vue({
     el : '#CtrSheets',
     data : {
+        show:true,
+        test:['aaa','bbb','ccc'],
         loading:false,
         sheet_name:'',
         errors:[],

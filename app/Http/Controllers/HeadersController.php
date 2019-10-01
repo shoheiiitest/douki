@@ -42,11 +42,18 @@ class HeadersController extends Controller
         ]);
     }
 
-    public function getColTypes(){
+    public function getColTypes($mode,$header_id = null){
         $col_types = config('params.headers.col_types');
         unset($col_types[0]);//"結果"はリストさせないので削除
+
+        $header = null;
+        if($mode == 'edit'){
+            $header = new Header();
+            $header = $header->find($header_id);
+        }
         return response()->json([
             'col_types' => $col_types,
+            'header' => $header,
         ]);
     }
 

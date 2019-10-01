@@ -11,8 +11,9 @@
         <div class="form-group row">
             <label for="" class="col-2 text-center align-self-center">タイプ</label>
 {{--            <input type="" id="" class="form-control col-10" v-model="col_name">--}}
-            <select name="" id="" v-model="selecting">
-                <option cloak v-for="(col_type,index) in col_types" :key="index" :value="index">@{{ col_type }}</option>
+            <label v-cloak v-if="selecting == undefined" class="align-self-center">結果</label>
+            <select v-else v-cloak v-model="selecting">
+                <option v-cloak v-for="(col_type,index) in col_types" :key="index" :value="index">@{{ col_type }}</option>
             </select>
         </div>
         <div class="m-4">

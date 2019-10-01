@@ -23,7 +23,7 @@ Route::get('{project_id}/headers/getItems/', 'HeadersController@getItems');
 Route::post('headers/submitHeaders/', 'HeadersController@submitHeaders');
 Route::post('headers/editDispFlg/', 'HeadersController@editDispFlg');
 Route::post('headers/moveOrder/', 'HeadersController@moveOrder');
-Route::get('headers/getColTypes/', 'HeadersController@getColTypes');
+Route::get('headers/getColTypes/{mode}/{header_id?}', 'HeadersController@getColTypes');
 Route::post('project/delete/', 'ProjectsController@delete');
 Route::post('cases/submit', 'TestcasesController@submit');
 Route::post('projects/submit', 'ProjectsController@submit');

@@ -10,15 +10,22 @@ var CtrIndex = new Vue({
 
     },
     methods:{
-        async getColTypes(){
+        async getColTypes(mode,header_id){
             this.loading = true;
-            var requestPath = '/api/headers/getColTypes/';
+            var requestPath = '/api/headers/getColTypes/'+ mode + '/';
+            if(mode=='edit'){
+                requestPath+=header_id;
+            }
             const result = await axios.get(requestPath).then(function (response) {
                 return response.data;
             }).catch(function (error) {
                 return error;
             });
-
+            console.log(result.header);
+            if(mode == 'edit'){
+                this.col_name = result.header.col_name;
+                this.selecting = result.header.col_type;
+            }
             this.col_types = result.col_types;
             this.loading = false;
 
@@ -168,7 +175,15 @@ var CtrIndex = new Vue({
         // },
 
         loadLists(){
-            this.getColTypes();
+            var header_id = '';
+            if(window.location.pathname.split('/')[2]=='edit'){
+                var mode = 'edit';
+                var header_id = window.location.pathname.split('/')[3];
+            }else{
+                var mode = 'create';
+            }
+
+            this.getColTypes(mode,header_id);
 
         },
 
