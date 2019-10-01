@@ -35,6 +35,10 @@ var CtrIndex = new Vue({
             this.loading = false;
         },
 
+        toEdit(header_id){
+            window.location.href = '/header/edit/' + header_id;
+        },
+
         async submitHeaders(){
             if(!confirm('登録してよろしいでござるか？')){
                 return;

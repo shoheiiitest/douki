@@ -21,9 +21,24 @@ class HeadersController extends Controller
     public function create($project_id){
         $col_types = config('params.headers.col_types');
         unset($col_types[0]);//"結果"はリストさせないので削除
+        $mode = 'create';
         return view('headers/create',[
             'title' => 'カラム追加',
             'project_id' => $project_id,
+            'mode' => $mode,
+        ]);
+    }
+
+    public function edit($header_id){
+        $header = new Header();
+        $header = $header->find($header_id);
+        $col_types = config('params.headers.col_types');
+        unset($col_types[0]);//"結果"はリストさせないので削除
+        $mode = 'edit';
+        return view('headers/create',[
+            'title' => 'カラム編集',
+            'mode' => $mode,
+            'header' => $header,
         ]);
     }
 

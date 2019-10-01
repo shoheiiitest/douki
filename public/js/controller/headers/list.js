@@ -7885,6 +7885,9 @@ var CtrIndex = new Vue({
 
       return getItems;
     }(),
+    toEdit: function toEdit(header_id) {
+      window.location.href = '/header/edit/' + header_id;
+    },
     submitHeaders: function () {
       var _submitHeaders = _asyncToGenerator(
       /*#__PURE__*/
@@ -8082,7 +8085,7 @@ var CtrIndex = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/imaishohei/tms/resources/js/controller/headers/list.js */"./resources/js/controller/headers/list.js");
+module.exports = __webpack_require__(/*! G:\src\tms\resources\js\controller\headers\list.js */"./resources/js/controller/headers/list.js");
 
 
 /***/ })

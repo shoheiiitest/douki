@@ -16,7 +16,11 @@
             </select>
         </div>
         <div class="m-4">
-            <button @click="submit({{ $project_id }})" class="btn-info text-white p-2 rounded-lg">登録する</button>
+            @if($mode=='create')
+                <button @click="submit({{ $project_id }})" class="btn-info text-white p-2 rounded-lg">登録する</button>
+            @else
+                <button @click="submit" class="btn-info text-white p-2 rounded-lg">保存する</button>
+            @endif
         </div>
     </div>
 @endsection
