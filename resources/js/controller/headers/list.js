@@ -35,8 +35,8 @@ var CtrIndex = new Vue({
             this.loading = false;
         },
 
-        toEdit(header_id){
-            window.location.href = '/header/edit/' + header_id;
+        toEdit(header_id,project_id){
+            window.location.href = '/' + project_id + '/header/edit/' + header_id;
         },
 
         async submitHeaders(){

@@ -31,9 +31,11 @@ var CtrIndex = new Vue({
 
         },
 
-        async submit(project_id){
+        async submit(mode,project_id,header_id){
             this.loading = true;
             var data = {
+              mode : mode,
+              header_id: header_id,
               project_id : project_id,
               col_name : this.col_name,
               col_type : this.selecting,
@@ -176,9 +178,9 @@ var CtrIndex = new Vue({
 
         loadLists(){
             var header_id = '';
-            if(window.location.pathname.split('/')[2]=='edit'){
+            if(window.location.pathname.split('/')[3]=='edit'){
                 var mode = 'edit';
-                var header_id = window.location.pathname.split('/')[3];
+                var header_id = window.location.pathname.split('/')[4];
             }else{
                 var mode = 'create';
             }

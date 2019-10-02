@@ -29,7 +29,7 @@ class HeadersController extends Controller
         ]);
     }
 
-    public function edit($header_id){
+    public function edit($project_id,$header_id){
         $header = new Header();
         $header = $header->find($header_id);
         $col_types = config('params.headers.col_types');
@@ -37,6 +37,7 @@ class HeadersController extends Controller
         $mode = 'edit';
         return view('headers/create',[
             'title' => 'カラム編集',
+            'project_id' => $project_id,
             'mode' => $mode,
             'header' => $header,
         ]);
@@ -78,6 +79,8 @@ class HeadersController extends Controller
     public function submit(Request $request){
         $data = $request->all();
         $project_id = $data['project_id'];
+        $mode = $data['mode'];
+        $header_id = $data['header_id'];
         $col_name = $data['col_name'];
         $col_type = $data['col_type'];
 
@@ -98,12 +101,18 @@ class HeadersController extends Controller
         }
 
         $header = new Header();
+
+        if($mode=='create'){
         $order_num = $header->where('project_id',$project_id)->max('order_num') + 1;
         $header->project_id = $project_id;
         $header->col_name = $col_name;
         $header->col_type = $col_type;
         $header->order_num = $order_num;
         $header->disp_flg = 1;
+        }else{
+            $header = $header->find($header_id);
+            $header->col_name = $col_name;
+        }
         $header->save();
 
         if(!$header->save()){
@@ -114,6 +123,7 @@ class HeadersController extends Controller
 
         return response()->json([
             'success' => true,
+            'header_id' => $header->id,
         ]);
 
 

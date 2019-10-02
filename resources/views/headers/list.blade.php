@@ -20,7 +20,7 @@
             </div>
             <span v-cloak class="text-left text-info align-self-center col-5">@{{ header.col_name }}</span>
             <span v-cloak class="text-left text-info align-self-center col-2">@{{ col_types[header.col_type] }}</span>
-            <button @click="toEdit(header.id)" class="btn btn-info form-control offset-1 col-1 m-auto">編集</button>
+            <button @click="toEdit(header.id,header.project_id)" class="btn btn-info form-control offset-1 col-1 m-auto">編集</button>
             {{--<span v-cloak v-if="errors[index+'.col_name'] != undefined" class="col-11 offset-1 text-danger" v-html="errors[index+'.col_name'][0]"></span>--}}
         </div>
         </draggable>

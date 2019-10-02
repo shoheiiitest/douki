@@ -7885,8 +7885,8 @@ var CtrIndex = new Vue({
 
       return getItems;
     }(),
-    toEdit: function toEdit(header_id) {
-      window.location.href = '/header/edit/' + header_id;
+    toEdit: function toEdit(header_id, project_id) {
+      window.location.href = '/' + project_id + '/header/edit/' + header_id;
     },
     submitHeaders: function () {
       var _submitHeaders = _asyncToGenerator(
