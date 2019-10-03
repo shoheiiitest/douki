@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Header;
+use App\Item;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -100,26 +101,42 @@ class HeadersController extends Controller
             ]);
         }
 
-        $header = new Header();
+        DB::beginTransaction();
+        try {
+            $header = new Header();
 
-        if($mode=='create'){
-        $order_num = $header->where('project_id',$project_id)->max('order_num') + 1;
-        $header->project_id = $project_id;
-        $header->col_name = $col_name;
-        $header->col_type = $col_type;
-        $header->order_num = $order_num;
-        $header->disp_flg = 1;
-        }else{
-            $header = $header->find($header_id);
-            $header->col_name = $col_name;
-        }
-        $header->save();
+            if ($mode == 'create') {
+                $order_num = $header->where('project_id', $project_id)->max('order_num') + 1;
+                $header->project_id = $project_id;
+                $header->col_name = $col_name;
+                $header->col_type = $col_type;
+                $header->order_num = $order_num;
+                $header->disp_flg = 1;
+            } else {
+                $header = $header->find($header_id);
+                $header->col_name = $col_name;
+            }
+            $header->save();
 
-        if(!$header->save()){
+            if (!$header->save()) {
+                return response()->json([
+                    'success' => false,
+                ]);
+            }
+
+            if($header->col_type == '4'){
+                $item = new Item();
+
+            }
+
+        }catch(\Exception $ex){
+            DB::rollBack();
+
             return response()->json([
                 'success' => false,
             ]);
-        }
+        };
+
 
         return response()->json([
             'success' => true,

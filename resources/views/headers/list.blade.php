@@ -61,10 +61,6 @@
     </div>
 @endsection
 @section('style')
-    .handle{
-{{--        cursor:move;--}}
-        cursor:-webkit-grabbing;
-    }
 @endsection
 @section('script')
     <script type="text/javascript"  src="{{ mix('js/controller/headers/list.js')  }}"></script>

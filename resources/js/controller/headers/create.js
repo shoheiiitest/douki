@@ -1,3 +1,5 @@
+import draggable from 'vuedraggable'
+
 var CtrIndex = new Vue({
     el: "#CtrHeaders",
     data:{
@@ -7,6 +9,11 @@ var CtrIndex = new Vue({
         col_types:[],
         errors:[],
         selecting:'1',
+        items:[],
+        options:{
+            animation:300,
+            handle:'.handle',
+        },
 
     },
     methods:{
@@ -33,12 +40,19 @@ var CtrIndex = new Vue({
 
         async submit(mode,project_id,header_id){
             this.loading = true;
+            var count = $('#item-list span').children().length;
+            var items = [];
+            for(var i=0; i<count; i++){
+                items[i] = $('#item-list').children()[i].dataset['headerId'];
+            }
+
             var data = {
               mode : mode,
               header_id: header_id,
               project_id : project_id,
               col_name : this.col_name,
               col_type : this.selecting,
+              items:this.items,
             };
             var requestPath = '/api/headers/submit';
             const result = await axios.post(requestPath,data).then(function (response) {
@@ -199,6 +213,7 @@ var CtrIndex = new Vue({
     },
 
     components:{
+        draggable,
 
     }
 

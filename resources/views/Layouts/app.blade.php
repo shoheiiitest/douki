@@ -26,6 +26,10 @@
             display: none !important;
         }
 
+        .handle{
+            cursor:-webkit-grabbing;
+        }
+
         .fade3-enter{
             opacity:0;
         }
