@@ -25,6 +25,94 @@
         [v-cloak] {
             display: none !important;
         }
+
+        .fade3-enter{
+            opacity:0;
+        }
+        .fade3-enter-active{
+            transition: opacity 0.3s;
+        }
+        .fade3-enter-to{
+            opacity:1;
+        }
+        .fade3-leave{
+            opacity:1;
+        }
+        .fade3-leave-active{
+            transition: opacity 0.3s;
+        }
+        .fade3-leave-to{
+            opacity:0;
+        }
+
+        .fade5-enter{
+            opacity:0;
+        }
+        .fade5-enter-active{
+            transition: opacity 0.5s;
+        }
+        .fade5-enter-to{
+            opacity:1;
+        }
+        .fade5-leave{
+            opacity:1;
+        }
+        .fade5-leave-active{
+            transition: opacity 0.5s;
+        }
+        .fade5-leave-to{
+            opacity:0;
+        }
+
+
+        .fade7-enter{
+            opacity:0;
+        }
+        .fade7-enter-active{
+            transition: opacity 5s;
+        }
+        .fade7-enter-to{
+            opacity:1;
+        }
+        .fade7-leave{
+            opacity:1;
+        }
+        .fade7-leave-active{
+            transition: opacity 5s;
+        }
+        .fade7-leave-to{
+            opacity:0;
+        }
+
+
+        .slide-enter{
+        }
+        .slide-enter-active{
+            animation: slide-in 0.5s;
+        }
+        .slide-enter-to{
+
+        }
+        .slide-leave{
+            opacity:1;
+        }
+        .slide-leave-active{
+            /*animation: slide-in 0.5s reverse;*/
+            transition:opacity 0.5s;
+        }
+        .slide-leave-to{
+            opacity:0;
+        }
+
+        @keyframes slide-in{
+            from{
+                transform:translateX(1300px);
+            }
+
+            to{
+                transform:translateX(0);
+            }
+        }
         @yield('style')
         @yield('css')
     </style>
