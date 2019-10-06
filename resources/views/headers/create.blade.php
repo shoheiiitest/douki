@@ -3,10 +3,9 @@
 @section('content')
     <div id="CtrHeaders" class="mb-5">
         <rise-loader :loading="loading"></rise-loader>
-            {{--<div v-cloak v-if="show" class="z-index text-center w-100 p-4 rounded-lg">登録に成功しました。</div>--}}
-            <div v-cloak v-if="show" class="v-spinner">
+            <div v-cloak v-if="show" class="success-message-bg">
                 <transition name="slideY" appear>
-                    <h1 class="m-4 text-center success-message">保存に成功しました</h1>
+                    <h3 class="text-center success-message">保存に成功しました</h3>
                 </transition>
             </div>
         <div class="form-group row">
@@ -17,11 +16,11 @@
         <div class="form-group row">
             <label for="" class="col-2 text-center align-self-center">タイプ</label>
             <label v-cloak v-if="selecting == undefined" class="align-self-center">結果</label>
-            <select v-else v-cloak v-model="selecting">
+            <select @change="items = []" v-else v-cloak v-model="selecting">
                 <option v-cloak v-for="(col_type,index) in col_types" :key="index" :value="index">@{{ col_type }}</option>
             </select>
         </div>
-        <div v-if="selecting==4" class="mb-5">
+        <div v-cloak v-if="selecting==4" class="mb-5">
             <div class="text-center mt-5 mb-2">
                 <strong>アイテム</strong>
             </div>

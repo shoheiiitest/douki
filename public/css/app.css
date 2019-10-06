@@ -726,9 +726,30 @@ pre code {
     background-color: rgba(77, 115, 125, 0.42) !important;
 }
 
+.success-message-bg{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    text-align: center;
+    line-height: 100vh;
+    z-index: 99999999998;
+    background-color: rgba(237, 237, 237,0.4);
+}
+
 .success-message{
     line-height: 20vh;
-    background-color: #d04e6d;
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    color: #FFF;
+    background: #6eb7ff;
+    border-bottom: solid 6px #3f87ce;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+    border-radius: 9px;
 }
 
 @media (min-width: 576px) {

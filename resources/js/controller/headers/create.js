@@ -32,7 +32,10 @@ var CtrIndex = new Vue({
             if(mode == 'edit'){
                 this.col_name = result.header.col_name;
                 this.selecting = result.header.col_type;
-                this.items = result.items;
+                if(this.selecting==4){
+                    this.items = result.items;
+                }
+
             }
             this.col_types = result.col_types;
             this.loading = false;
@@ -69,6 +72,16 @@ var CtrIndex = new Vue({
             if(result.success){
                 this.show = true;
                 // window.location.href = '/'+project_id+'/headers/list';
+                if(mode=='create'){
+                    this.col_name = '';
+                    this.items = [];
+                    this.selecting = 1;
+                }else{
+                    if(this.selecting != 4){
+                        this.items = [];
+                    }
+                }
+                this.errors = '';
                 this.loading = false;
                 var handler = function(){CtrIndex.show = false};
                 var r = setTimeout(handler,2000);
