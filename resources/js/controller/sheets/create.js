@@ -68,7 +68,7 @@ var CtrSheets = new Vue({
                         case 4:
                             this.hotSettings.columns[i] ={
                                 editor: 'select',
-                                selectOptions: ['Kia', 'Nissan', 'Toyota', 'Honda']
+                                selectOptions: result.items[i],
                             };
                             break;
 

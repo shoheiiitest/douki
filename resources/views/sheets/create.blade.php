@@ -5,7 +5,7 @@
         <rise-loader :loading="loading"></rise-loader>
         <div class="form-group">
             <label class="text-info">シート名</label>
-            <input @keydown.enter="submit('{{ $mode}}',{{ $project_id }})" type="text" class="form-control" v-model="sheet_name">
+            <input type="text" class="form-control" v-model="sheet_name">
             <span v-cloak v-if="errors.sheet_name != undefined" class="text-danger" v-html="errors['sheet_name'][0]"></span>
         </div>
         <div class="m-4">

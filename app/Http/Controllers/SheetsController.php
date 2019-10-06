@@ -7,6 +7,7 @@ use App\Sheet;
 use App\Header;
 use App\Cases;
 use App\CaseContent;
+use App\Item;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
@@ -47,16 +48,23 @@ class SheetsController extends Controller
             ->where('disp_flg','1')
             ->orderBy('order_num','asc')->get();
         $returnHeaders = [];
-        $retrunColTypes = [];
+        $returnColTypes = [];
+        $items = [];
         for ($i=0; $i<count($headers); $i++){
             $returnHeaders[$i] = $headers[$i]->col_name;
-            $retrunColTypes[$i] = $headers[$i]->col_type;
+            $returnColTypes[$i] = $headers[$i]->col_type;
+            if($returnColTypes[$i]==4){
+                $item = new Item();
+                $items[$i] = $item->where('header_id',$headers[$i]->id)->pluck('item_name')->toArray();
+            }
+
         }
 
         if($mode=='create'){
             return response()->json([
                 'headers' => $returnHeaders,
-                'colTypes' => $retrunColTypes,
+                'colTypes' => $returnColTypes,
+                'items' => $items,
                 'success' => true,
             ]);
         }elseif($mode=='edit'){
@@ -87,7 +95,8 @@ class SheetsController extends Controller
             return response()->json([
                 'headers' => $returnHeaders,
                 'sheet_name' => $sheet_name,
-                'colTypes' => $retrunColTypes,
+                'colTypes' => $returnColTypes,
+                'items' => $items,
                 'data' => $data,
                 'success' => true,
             ]);
