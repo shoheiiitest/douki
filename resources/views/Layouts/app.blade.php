@@ -6,16 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- Main CSS -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-{{--    <link rel="stylesheet" href="{{ asset('css/bootstrap-nico/bootstrap.min.css') }}">--}}
-    <link rel="stylesheet" href="{{ asset('css/bootstrap-honoka/bootstrap.min.css') }}">
+
     <!-- Bootstrap CSS -->
-{{--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">--}}
+    {{--    <link rel="stylesheet" href="{{ asset('css/bootstrap-nico/bootstrap.min.css') }}">--}}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-honoka/bootstrap.min.css') }}">
 
     <!-- FontAwesome cdn -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome/all.min.css') }}">
 
     <!-- HandsOnTable -->
     <link rel="stylesheet" href="{{ asset('css/handsontable/handsontable.full.min.css') }}">
@@ -30,93 +29,6 @@
             cursor:-webkit-grabbing;
         }
 
-        .fade3-enter{
-            opacity:0;
-        }
-        .fade3-enter-active{
-            transition: opacity 0.3s;
-        }
-        .fade3-enter-to{
-            opacity:1;
-        }
-        .fade3-leave{
-            opacity:1;
-        }
-        .fade3-leave-active{
-            transition: opacity 0.3s;
-        }
-        .fade3-leave-to{
-            opacity:0;
-        }
-
-        .fade5-enter{
-            opacity:0;
-        }
-        .fade5-enter-active{
-            transition: opacity 0.5s;
-        }
-        .fade5-enter-to{
-            opacity:1;
-        }
-        .fade5-leave{
-            opacity:1;
-        }
-        .fade5-leave-active{
-            transition: opacity 0.5s;
-        }
-        .fade5-leave-to{
-            opacity:0;
-        }
-
-
-        .fade7-enter{
-            opacity:0;
-        }
-        .fade7-enter-active{
-            transition: opacity 5s;
-        }
-        .fade7-enter-to{
-            opacity:1;
-        }
-        .fade7-leave{
-            opacity:1;
-        }
-        .fade7-leave-active{
-            transition: opacity 5s;
-        }
-        .fade7-leave-to{
-            opacity:0;
-        }
-
-
-        .slide-enter{
-        }
-        .slide-enter-active{
-            animation: slide-in 0.5s;
-        }
-        .slide-enter-to{
-
-        }
-        .slide-leave{
-            opacity:1;
-        }
-        .slide-leave-active{
-            /*animation: slide-in 0.5s reverse;*/
-            transition:opacity 0.5s;
-        }
-        .slide-leave-to{
-            opacity:0;
-        }
-
-        @keyframes slide-in{
-            from{
-                transform:translateX(1300px);
-            }
-
-            to{
-                transform:translateX(0);
-            }
-        }
         @yield('style')
         @yield('css')
     </style>
@@ -129,14 +41,14 @@
     @yield('content')
 </div>
 <script type="text/javascript"  src="{{ mix('js/app.js')  }}" charset="utf-8"></script>
+
+<!-- Bootstrap JS -->
 {{--<script type="text/javascript"  src="{{ asset('js/bootstrap-nico/bootstrap.min.js')  }}" charset="utf-8"></script>--}}
 <script type="text/javascript"  src="{{ asset('js/bootstrap-honoka/bootstrap.min.js')  }}" charset="utf-8"></script>
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-{{--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>--}}
-{{--<script type="text/javascript"  src="{{ asset('js/handsontable/handsontable.full.min.js')  }}" charset="utf-8"></script>--}}
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>--}}
 @yield('script')
 </body>
 </html>

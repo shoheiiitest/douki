@@ -49979,6 +49979,9 @@ Vue.component('rise-loader', __webpack_require__(/*! vue-spinner/src/RiseLoader.
  */
 // const app = new Vue({
 //     el: '#app',
+//     data : {
+//         show:false,
+//     }
 // });
 
 /***/ }),

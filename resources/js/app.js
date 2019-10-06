@@ -31,4 +31,7 @@ Vue.component('rise-loader', require('vue-spinner/src/RiseLoader.vue').default);
 
 // const app = new Vue({
 //     el: '#app',
+//     data : {
+//         show:false,
+//     }
 // });

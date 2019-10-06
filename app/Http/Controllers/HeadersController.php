@@ -48,15 +48,25 @@ class HeadersController extends Controller
         $col_types = config('params.headers.col_types');
         unset($col_types[0]);//"結果"はリストさせないので削除
 
+        $returnData = [];
         $header = null;
         if($mode == 'edit'){
             $header = new Header();
             $header = $header->find($header_id);
+            if($header->col_type=='4'){
+                $item = new Item();
+                $items = $item->where('header_id',$header->id)->orderBy('order_num','asc')->get();
+                $item_names = [];
+                foreach($items as $k => $i){
+                    $item_names[$k] = $i->item_name;
+                }
+                $returnData['items'] = $item_names;
+            }
         }
-        return response()->json([
-            'col_types' => $col_types,
-            'header' => $header,
-        ]);
+        $returnData['col_types'] = $col_types;
+        $returnData['header'] = $header;
+
+        return response()->json($returnData);
     }
 
     public function getItems($project_id){
@@ -84,13 +94,16 @@ class HeadersController extends Controller
         $header_id = $data['header_id'];
         $col_name = $data['col_name'];
         $col_type = $data['col_type'];
+        $items = $data['items'];
 
         $attributes = [
-          'col_name' => trans('public.headers.col_name')
+            'col_name' => trans('public.headers.col_name'),
+            'items.*' =>  trans('public.headers.items'),
         ];
 
         $ruleValid = [
-            'col_name' => 'required|max:10',
+            'col_name' => 'required|max:50',
+            'items.*' => 'required|max:50',
         ];
 
         $validator = Validator::make( $data, $ruleValid,[],$attributes);
@@ -125,9 +138,29 @@ class HeadersController extends Controller
             }
 
             if($header->col_type == '4'){
+                $num = 1;
                 $item = new Item();
+                foreach($items as $item_name){
+                    $item = new Item();
+                    $item->updateOrCreate(
+                        [
+                            'order_num' => $num,
+                            'header_id' => $header->id,
+                        ],
+                        [
+                            'header_id' => $header->id,
+                            'item_name' => $item_name,
+                            'order_num' => $num,
+                        ]
+                    );
+
+                    $num++;
+                }
 
             }
+
+            DB::commit();
+
 
         }catch(\Exception $ex){
             DB::rollBack();
