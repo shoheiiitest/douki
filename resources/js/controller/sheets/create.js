@@ -118,6 +118,13 @@ var CtrSheets = new Vue({
             this.loading = false;
 
         },
+
+        async exportSheet(project_id,sheet_id){
+            // this.loading = true;
+            var requestPath = '/sheet/export/' + project_id + '/' + sheet_id;
+            window.location.href = requestPath;
+            // this.loading = false;
+        },
     },
 
     mounted(){

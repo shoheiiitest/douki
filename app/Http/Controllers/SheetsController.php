@@ -11,6 +11,8 @@ use App\Item;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
+use App\Exports\SheetExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SheetsController extends Controller
 {
@@ -261,5 +263,12 @@ class SheetsController extends Controller
                 'success' => false,
             ]);
         }
+    }
+
+    public function export($project_id,$sheet_id)
+    {
+//        $export = new SheetExport([[1, 2, 3], [4, 5, 6]]);
+        $export = new SheetExport($project_id,$sheet_id);
+        return Excel::download($export, 'sheet.xlsx');
     }
 }

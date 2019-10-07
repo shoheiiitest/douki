@@ -23,7 +23,10 @@
                 <button @click="submit('{{ $mode}}',{{ $project_id }})" class="btn-info text-white p-2 rounded-lg">登録する</button>
             @elseif($mode=='edit')
                 <button @click="submit('{{ $mode }}',{{ $project_id }},{{ $sheet_id }})" class="btn-info text-white p-2 rounded-lg">保存する</button>
+                <button @click="exportSheet('{{ $project_id }}','{{ $sheet_id }}')" class="btn-dark text-white p-2 rounded-lg float-right">出力</button>
             @endif
+{{--                <button @click="exportSheet" class="btn-outline-dark text-white p-2 rounded-lg float-right">出力</button>--}}
+{{--                <a href="/sheet/export/">export</a>--}}
         </div>
     </div>
 @endsection
