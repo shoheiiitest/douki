@@ -267,7 +267,6 @@ class SheetsController extends Controller
 
     public function export($project_id,$sheet_id)
     {
-//        $export = new SheetExport([[1, 2, 3], [4, 5, 6]]);
         $export = new SheetExport($project_id,$sheet_id);
         return Excel::download($export, 'sheet.xlsx');
     }

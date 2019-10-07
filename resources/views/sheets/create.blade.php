@@ -13,20 +13,18 @@
                 <button @click="submit('{{ $mode}}',{{ $project_id }})" class="btn-info text-white p-2 rounded-lg">登録する</button>
             @elseif($mode=='edit')
                 <button @click="submit('{{ $mode }}',{{ $project_id }},{{ $sheet_id }})" class="btn-info text-white p-2 rounded-lg">保存する</button>
+                <button @click="exportSheet('{{ $project_id }}','{{ $sheet_id }}')" class="btn-dark text-white p-2 rounded-lg float-right">出力</button>
             @endif
         </div>
-        <div class="mb-5" @keydown.ctrl.83="submit('{{ $mode}}',{{ $project_id }})">
+        <div v-cloak class="mb-5" @keyup.ctrl.83.prevent="submit('{{ $mode}}','{{ $project_id }}','{{ ($mode=='edit') ? $sheet_id:null }}')">
             <hot-table :root="root" :settings="hotSettings" ref="testHot"></hot-table>
         </div>
-        <div class="m-4">
+        <div v-cloak class="m-4">
             @if($mode=='create')
                 <button @click="submit('{{ $mode}}',{{ $project_id }})" class="btn-info text-white p-2 rounded-lg">登録する</button>
             @elseif($mode=='edit')
                 <button @click="submit('{{ $mode }}',{{ $project_id }},{{ $sheet_id }})" class="btn-info text-white p-2 rounded-lg">保存する</button>
-                <button @click="exportSheet('{{ $project_id }}','{{ $sheet_id }}')" class="btn-dark text-white p-2 rounded-lg float-right">出力</button>
             @endif
-{{--                <button @click="exportSheet" class="btn-outline-dark text-white p-2 rounded-lg float-right">出力</button>--}}
-{{--                <a href="/sheet/export/">export</a>--}}
         </div>
     </div>
 @endsection

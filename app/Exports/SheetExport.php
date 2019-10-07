@@ -21,7 +21,11 @@ class SheetExport implements FromArray,WithHeadings
     {
         $this->project_id = $project_id;
         $this->sheet_id = $sheet_id;
-        $this->header = \App\Header::where('project_id',$project_id)->orderBy('order_num','asc')->get('col_name')->toArray();
+        $this->col_name = \App\Header::where('project_id',$project_id)->where('disp_flg',1)->orderBy('order_num','asc')->pluck('col_name')->toArray();
+        $this->header = new Header();
+        $this->sheet = new Sheet();
+        $this->case = new Cases();
+        $this->case_contents = new CaseContent();
     }
 
 //    public function collection()
@@ -38,11 +42,11 @@ class SheetExport implements FromArray,WithHeadings
      */
     public function headings(): array
     {
-        $ret = [];
-        foreach($this->header as $i => $v){
-            $ret[] = $v['col_name'];
-        }
-        return $ret;
+////        $ret = [];
+////        foreach($this->header as $i => $v){
+////            $ret[] = $v['col_name'];
+//        }
+        return $this->col_name;
     }
 
     /**
@@ -50,9 +54,15 @@ class SheetExport implements FromArray,WithHeadings
      */
     public function array(): array
     {
-        return [
-            [1,2,3],
-            [4,5,6],
-        ];
+        $caseIds = \App\Cases::where('sheet_id',$this->sheet_id)->orderBy('case_no','asc')->pluck('id')->toArray();
+        $ret = [];
+        $headerIds = \App\Header::where('project_id',$this->project_id)->where('disp_flg',1)->orderBy('order_num','asc')->pluck('id')->toArray();
+        foreach ($caseIds as $index => $case_id){
+            foreach ($headerIds as $i => $header_id){
+                $case_content = $this->case_contents->where('case_id',$case_id)->where('header_id',$header_id)->pluck('content')->toArray();
+                $ret[$index][$i] = $case_content[0];
+            }
+        }
+        return [$ret];
     }
 }
