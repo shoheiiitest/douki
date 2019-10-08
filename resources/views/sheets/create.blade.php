@@ -16,7 +16,7 @@
                 <button @click="exportSheet('{{ $project_id }}','{{ $sheet_id }}')" class="btn-dark text-white p-2 rounded-lg float-right">出力</button>
             @endif
         </div>
-        <div v-cloak class="mb-5" @keyup.ctrl.83.prevent="submit('{{ $mode}}','{{ $project_id }}','{{ ($mode=='edit') ? $sheet_id:null }}')">
+        <div v-cloak class="mb-5" @keyup.ctrl.shift.83="submit('{{ $mode}}','{{ $project_id }}','{{ ($mode=='edit') ? $sheet_id:null }}')">
             <hot-table :root="root" :settings="hotSettings" ref="testHot"></hot-table>
         </div>
         <div v-cloak class="m-4">
