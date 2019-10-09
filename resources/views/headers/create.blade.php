@@ -16,7 +16,7 @@
         <div class="form-group row">
             <label for="" class="col-2 text-center align-self-center">タイプ</label>
             <label v-cloak v-if="selecting == undefined" class="align-self-center">結果</label>
-            <select @change="items = []" v-else v-cloak v-model="selecting">
+            <select @change="items = []; errors =[];" v-else v-cloak v-model="selecting" class="form-control col-2">
                 <option v-cloak v-for="(col_type,index) in col_types" :key="index" :value="index">@{{ col_type }}</option>
             </select>
         </div>
