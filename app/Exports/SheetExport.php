@@ -9,9 +9,6 @@ use App\Header;
 use App\Exports\SheetDataExport;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
-//use Maatwebsite\Excel\Concerns\FromArray;
-//use Maatwebsite\Excel\Concerns\WithHeadings;
-//use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
 class SheetExport implements FromCollection,WithMultipleSheets
