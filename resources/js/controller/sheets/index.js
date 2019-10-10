@@ -2,37 +2,31 @@
 var CtrSheets = new Vue({
     el : '#CtrSheets',
     data : {
-        show:true,
+        show:false,
         loading:false,
         file_name:'',
+        files:[],
         sheet_name:'',
         errors:[],
     },
     methods:{
-        async submit(mode,project_id,sheet_id=null){
-            var data = {
-                mode:mode,
-                project_id: project_id,
-                sheet_id:sheet_id,
-                sheet_name:this.sheet_name,
-            };
+        async submit(){
             this.loading = true;
-            var requestPath = '/api/sheets/submit';
-            const result = await axios.post(requestPath,data).then(function (response) {
-                return response.data;
+            let formData = new FormData();
+            formData.append('customFile',this.files);
+            formData.append('customFileName',this.file_name);
+
+            this.loading = true;
+            var requestPath = '/api/sheets/import';
+            await axios.post(requestPath,formData,{ 'content-type': 'multipart/form-data' }).then(function (response) {
+                this.loading = false;
+                this.show = true;
+                var handler = function(){CtrSheets.show = false};
+                var r = setTimeout(handler,2000);
             }).catch(function (error) {
                 return error;
             });
 
-            if(result.success){
-                alert('成功でござる');
-            }else if(result.message != undefined){
-                this.errors = result.message;
-                this.loading = false;
-            }else{
-                alert('何かエラーがあるでござる');
-                this.loading = false;
-            }
             this.loading = false;
 
         },
@@ -40,6 +34,7 @@ var CtrSheets = new Vue({
         upFile(e,target){
             console.log(e);
             this.file_name = e.target.files[0].name;
+            this.files = e.target.files[0];
         },
 
     },

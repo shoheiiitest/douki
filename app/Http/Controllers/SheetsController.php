@@ -270,4 +270,9 @@ class SheetsController extends Controller
         $export = new SheetExport($project_id,$sheet_id);
         return Excel::download($export, 'sheet.xlsx');
     }
+
+    public function import(Request $request){
+        $data = $request->all();
+        dd($data);
+    }
 }
