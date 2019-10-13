@@ -9,6 +9,7 @@ class Item extends Model
     protected $table = "t_items";
     protected $fillable = [
         'id',
+        'project_id',
         'header_id',
         'item_name',
         'order_num',

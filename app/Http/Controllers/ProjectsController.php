@@ -9,6 +9,7 @@ use App\Header;
 use App\Sheet;
 use App\Cases;
 use App\CaseContent;
+use App\Item;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -38,12 +39,14 @@ class ProjectsController extends Controller
         $sheets = new Sheet();
         $cases = new Cases();
         $caseContents = new CaseContent();
+        $item = new Item();
 
         $project->destroy($project_id);
         $headers->where('project_id',$project_id)->delete();
         $sheets->where('project_id',$project_id)->delete();
         $cases->where('project_id',$project_id)->delete();
         $caseContents->where('project_id',$project_id)->delete();
+        $item->where('project_id',$project_id)->delete();
 //        if(!($project->destroy($project_id))){
 //            return response()->json([
 //               'success' => false,

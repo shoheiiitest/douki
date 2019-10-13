@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\MultiSheetImport;
 use Illuminate\Http\Request;
 use App\Sheet;
 use App\Header;
@@ -12,7 +13,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 use App\Exports\SheetExport;
+use App\Imports\SheetImport;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+//use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 class SheetsController extends Controller
 {
@@ -271,8 +276,86 @@ class SheetsController extends Controller
         return Excel::download($export, 'sheet.xlsx');
     }
 
-    public function import(Request $request){
+    public function importFile(Request $request){
         $data = $request->all();
-        dd($data);
+        $project_id = $data['project_id'];
+        $file = request()->file('customFile');
+        $rows = Excel::toArray(new MultiSheetImport,$file);
+        unset($rows[0][0]);
+        $rows = array_values($rows[0]);
+        $reader = new Xlsx();
+        $spreadsheet = $reader->load($file);
+        $sheet_name = $spreadsheet->getSheetNames()[0];
+
+        DB::beginTransaction();
+        try{
+
+            $sheet = new Sheet();
+
+            $sheet->project_id = $project_id;
+            $sheet->sheet_no = $sheet->where('project_id',$project_id)->max('sheet_no') + 1;
+            $sheet->sheet_name = $sheet_name;
+            $sheet->save();
+            $sheet_id = $sheet->id;
+            $sheet_no = $sheet->sheet_no;
+            $headerIds = Header::where('project_id',$project_id)->orderBy('order_num','asc')->pluck('id')->toArray();
+
+            foreach($rows as $index => $row){
+                $cases = new Cases();
+                $cases->case_no = $index +1;
+                $cases->project_id = $project_id;
+                $cases->sheet_id = $sheet_id;
+                $cases->sheet_no = $sheet_no;
+                $cases->save();
+                $case_id = $cases->id;
+                foreach ($row as $i => $content){
+                    $case_contents = new CaseContent();
+                    $case_contents->project_id = $project_id;
+                    $case_contents->header_id = $headerIds[$i];
+                    $case_contents->sheet_id = $sheet_id;
+                    $case_contents->case_id = $case_id;
+                    $case_contents->content = $content;
+                    $case_contents->save();
+
+                }
+
+            }
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+            ]);
+
+
+
+        }catch (\Exception $ex){
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+            ]);
+
+
+        }
+
+
+    }
+
+    public function setImportFile(Request $request){
+        $data = $request->all();
+        $file = request()->file('customFile');
+        $rows = Excel::toArray(new MultiSheetImport,$file);
+        unset($rows[0][0]);
+        $rows = array_values($rows[0]);
+        $reader = new Xlsx();
+        $spreadsheet = $reader->load($file);
+        $sheetName = $spreadsheet->getSheetNames()[0];
+//        $array = (new SheetImport)->toArray($file,null,\Maatwebsite\Excel\Excel::CSV);
+
+        return response()->json([
+            'rows' => $rows,
+            'sheet_name' => $sheetName,
+        ]);
+
     }
 }

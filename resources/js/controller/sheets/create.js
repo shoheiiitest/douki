@@ -4,10 +4,12 @@ import Handsontable from 'handsontable';
 var CtrSheets = new Vue({
     el : '#CtrSheets',
     data : {
-        show:true,
+        show:false,
         test:['aaa','bbb','ccc'],
         loading:false,
         sheet_name:'',
+        file_name:'',
+        files:[],
         errors:[],
         root:'testHot',
         hotSettings: {
@@ -107,6 +109,8 @@ var CtrSheets = new Vue({
             });
 
             if(result.success){
+                this.file_name = '';
+                this.files = [];
                 alert('成功でござる');
             }else if(result.message != undefined){
                 this.errors = result.message;
@@ -125,6 +129,49 @@ var CtrSheets = new Vue({
             window.location.href = requestPath;
             // this.loading = false;
         },
+
+        upFile(e,target){
+            console.log(e);
+            this.file_name = e.target.files[0].name;
+            this.files = e.target.files[0];
+        },
+
+        async setImportFile(){
+            this.loading = true;
+            let formData = new FormData();
+            formData.append('customFile',this.files);
+            formData.append('customFileName',this.file_name);
+
+            this.loading = true;
+            var requestPath = '/api/sheets/setImportFile';
+            let result = await axios.post(requestPath,formData,{ 'content-type': 'multipart/form-data' }).then(function (response) {
+                console.log(response.data);
+                console.log(response.data.sheet_name);
+                console.log(response.data.rows);
+                // this.sheet_name = response.data.sheet_name;
+                // this.hotSettings.data = response.data.rows;
+                // this.loading = false;
+                // this.show = true;
+                // var handler = function(){CtrSheets.show = false};
+                // var r = setTimeout(handler,2000);
+                return response.data;
+            }).catch(function (error) {
+                return error;
+            });
+
+            this.sheet_name = result.sheet_name;
+            this.hotSettings.data = result.rows;
+            this.file_name = '';
+            this.files = [];
+            this.loading = false;
+            this.show = true;
+            var handler = function(){CtrSheets.show = false};
+            var r = setTimeout(handler,2000);
+
+            // this.loading = false;
+
+        },
+
     },
 
     mounted(){

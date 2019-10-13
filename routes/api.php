@@ -30,7 +30,8 @@ Route::post('projects/submit', 'ProjectsController@submit');
 Route::post('headers/submit', 'HeadersController@submit');
 Route::post('sheets/submit', 'SheetsController@submit');
 Route::get('sheets/getItems/{mode}/{project_id}/{sheet_id?}', 'SheetsController@getItems');
-Route::post('sheets/import', 'SheetsController@import');
+Route::post('sheets/importFile', 'SheetsController@importFile');
+Route::post('sheets/setImportFile', 'SheetsController@setImportFile');
 //Route::group(['prefix' => 'api'], function () {
 //    Route::get('cases/getItems/{project_id}/{sheet_id}', 'TestcasesController@index');
 //});

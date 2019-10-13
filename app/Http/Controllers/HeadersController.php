@@ -139,7 +139,6 @@ class HeadersController extends Controller
 
             if($header->col_type == '4'){
                 $num = 1;
-                $item = new Item();
                 foreach($items as $item_name){
                     $item = new Item();
                     $item->updateOrCreate(
@@ -148,6 +147,7 @@ class HeadersController extends Controller
                             'header_id' => $header->id,
                         ],
                         [
+                            'project_id'=> $project_id,
                             'header_id' => $header->id,
                             'item_name' => $item_name,
                             'order_num' => $num,
