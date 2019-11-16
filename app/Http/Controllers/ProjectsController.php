@@ -26,6 +26,7 @@ class ProjectsController extends Controller
 
     public function getItems(){
         $projects = new Project();
+        
         $projects = $projects->orderBy('project_name','asc')->get();
         return response()->json([
             'projects' => $projects,
