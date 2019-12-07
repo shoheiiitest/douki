@@ -17,6 +17,7 @@ class CreateMUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('user_name','30');
             $table->string('user_code','30');
+            $table->string('email','255');
             $table->string('password','255');
             $table->string('remember_token','255');
             $table->timestamps();
