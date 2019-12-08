@@ -26,6 +26,8 @@ Route::get('/cases/{project_id}/{sheet_id}', 'TestcasesController@index');
 Route::get('/create', 'TestcasesController@create');
 
 Route::get('/sheet/export/{project_id}/{sheet_id}', 'SheetsController@export');
+Route::get('/register', 'RegisterController@index');
+Route::post('/register', 'RegisterController@create');
 
 Auth::routes();
 
