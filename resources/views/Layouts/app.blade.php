@@ -34,8 +34,11 @@
     </style>
 </head>
 <body>
-<div class="py-3 mt-3 mb-5 bg-info text-white">
+<div class="py-3 mt-3 mb-1 bg-info text-white">
     <h1 class="text-center">@yield('title')</h1>
+</div>
+<div class="text-right">
+    <button onclick="location.href='/logout'" class="btn btn-dark mr-2">ログアウト</button>
 </div>
 <div class="container">
     @yield('content')
