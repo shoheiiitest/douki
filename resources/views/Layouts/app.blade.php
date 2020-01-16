@@ -29,17 +29,43 @@
             cursor:-webkit-grabbing;
         }
 
+        .full-height {
+                height: 100vh;
+            }
+
+            .flex-center {
+                align-items: center;
+                display: flex;
+                justify-content: center;
+            }
+
+            .position-ref {
+                position: relative;
+            }
+
         @yield('style')
         @yield('css')
     </style>
 </head>
 <body>
-<div class="py-3 mt-3 mb-1 bg-info text-white">
-    <h1 class="text-center">@yield('title')</h1>
-</div>
-<div class="text-right">
-    <button onclick="location.href='/logout'" class="btn btn-dark mr-2">ログアウト</button>
-</div>
+    @auth
+        <div class="py-3 mt-3 mb-1 bg-info text-white">
+            <h1 class="text-center">@yield('title')</h1>
+        </div>
+            <div class="top-right links">
+                    <div class="text-right">
+                        <button onclick="location.href='/logout'" class="btn btn-dark mr-2">ログアウト</button>
+                    </div>
+            </div>
+    @else
+                        <div class="top-right links">
+                    <div class="text-right">
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="btn btn-white m-5">新規登録</a>
+                        @endif
+                    </div>
+            </div>
+    @endauth
 <div class="container">
     @yield('content')
 </div>

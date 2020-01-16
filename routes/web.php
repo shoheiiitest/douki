@@ -11,9 +11,9 @@
 |
 */
 
-//Route::get('/', function () {
+// Route::get('/home', function () {
 //    return view('welcome');
-//});
+// });
 Auth::routes();
 Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/', 'ProjectsController@index');
@@ -28,8 +28,6 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/create', 'TestcasesController@create');
 
 Route::get('/sheet/export/{project_id}/{sheet_id}', 'SheetsController@export');
-Route::get('/register', 'RegisterController@index');
-Route::post('/register', 'RegisterController@create');
 });
 
 //logout
