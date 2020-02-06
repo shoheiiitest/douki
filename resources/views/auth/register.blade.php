@@ -25,6 +25,20 @@
                             </div>
                         </div>
 
+{{--                        <div class="form-group row">--}}
+{{--                            <label for="user_code" class="col-md-4 col-form-label text-md-right">{{ __('User Code') }}</label>--}}
+
+{{--                            <div class="col-md-6">--}}
+{{--                                <input id="user_code" type="text" class="form-control @error('user_code') is-invalid @enderror" name="user_code" value="{{ old('user_code') }}" required autocomplete="user_code" autofocus>--}}
+
+{{--                                @error('user_code')--}}
+{{--                                <span class="invalid-feedback" role="alert">--}}
+{{--                                        <strong>{{ $message }}</strong>--}}
+{{--                                    </span>--}}
+{{--                                @enderror--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
