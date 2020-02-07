@@ -42,15 +42,13 @@
             .position-ref {
                 position: relative;
             }
-
-        @yield('style')
-        @yield('css')
     </style>
 </head>
 <body>
     @auth
         <div class="py-3 mt-3 mb-1 bg-info text-white">
             <h1 class="text-center">@yield('title')</h1>
+            <h5 class="text-right pr-5">ユーザ名： {{ Auth::user()['name'] }}</h5>
         </div>
             <div class="top-right links">
                     <div class="text-right">
