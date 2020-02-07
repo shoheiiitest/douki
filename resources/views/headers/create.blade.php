@@ -50,7 +50,8 @@
 @endsection
 @section('style')
     .my-pink {color: pink}
-    .fa-plus-circle,.fa-trash-alt{
+    .fa-plus-circle,
+    .fa-trash-alt{
     cursor:pointer;
     }
 @endsection

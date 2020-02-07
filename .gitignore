@@ -12,3 +12,4 @@ yarn-error.log
 /docker/logs
 /docker/mysql/DDL
 /.idea
+launch.json
