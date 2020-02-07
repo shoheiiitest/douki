@@ -45,7 +45,7 @@ var CtrSheets = new Vue({
             }).catch(function (error) {
                 return error;
             });
-
+console.log(result);
             if(result.success){
                 this.hotSettings.colHeaders = result.headers;
                 for(var i=0; i<result.headers.length; i++){
@@ -61,7 +61,7 @@ var CtrSheets = new Vue({
                         case 2:
                             this.hotSettings.columns[i] ={
                                 editor: 'select',
-                                selectOptions: ['Shohei', 'Ha', 'Tam', 'Tho']
+                                selectOptions: result.members
                             };
                             break;
                         case 3:

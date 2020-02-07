@@ -9,6 +9,7 @@ use App\Header;
 use App\Cases;
 use App\CaseContent;
 use App\Item;
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
@@ -54,6 +55,11 @@ class SheetsController extends Controller
             ->where('project_id',$project_id)
             ->where('disp_flg','1')
             ->orderBy('order_num','asc')->get();
+
+
+        $user = new User();
+        $members = $user->pluck('name')->toArray();
+
         $returnHeaders = [];
         $returnColTypes = [];
         $items = [];
@@ -70,6 +76,7 @@ class SheetsController extends Controller
         if($mode=='create'){
             return response()->json([
                 'headers' => $returnHeaders,
+                'members' => $members,
                 'colTypes' => $returnColTypes,
                 'items' => $items,
                 'success' => true,
@@ -101,6 +108,7 @@ class SheetsController extends Controller
 
             return response()->json([
                 'headers' => $returnHeaders,
+                'members' => $members,
                 'sheet_name' => $sheet_name,
                 'colTypes' => $returnColTypes,
                 'items' => $items,
