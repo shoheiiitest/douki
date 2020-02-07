@@ -9,6 +9,7 @@
                 <span v-cloak v-if="errors.project_name != undefined" class="text-danger" v-html="errors['project_name'][0]"></span>
         </div>
         <div class="m-4">
+            <button onclick="location.href='/'" class="btn-dark p-2 rounded-lg">戻る</button>
             <button @click="submit" class="btn-info text-white p-2 rounded-lg">登録する</button>
         </div>
     </div>

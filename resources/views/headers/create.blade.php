@@ -39,6 +39,7 @@
             </div>
         </div>
         <div class="m-4">
+            <button onclick="location.href='/{{ $project_id }}/headers/list'" class="btn-dark p-2 rounded-lg">戻る</button>
             @if($mode=='create')
                 <button @click="submit('{{ $mode }}',{{ $project_id }})" class="btn-info text-white p-2 rounded-lg float-right">登録する</button>
             @else

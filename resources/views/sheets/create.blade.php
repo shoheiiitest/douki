@@ -35,6 +35,7 @@
             <hot-table :root="root" :settings="hotSettings" ref="testHot"></hot-table>
         </div>
         <div v-cloak class="m-4">
+            <button onclick="location.href='/sheets/{{ $project_id }}'" class="btn-dark p-2 rounded-lg">戻る</button>
             @if($mode=='create')
                 <button @click="submit('{{ $mode}}',{{ $project_id }})" class="btn-info text-white p-2 rounded-lg">登録する</button>
             @elseif($mode=='edit')

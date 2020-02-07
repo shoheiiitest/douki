@@ -16,6 +16,7 @@
         </div>
         </draggable>
         <div class="m-4">
+            <button onclick="location.href='/'" class="btn-dark p-2 rounded-lg">戻る</button>
             <button onclick="location.href='/{{ $project_id }}/header/create'" class="btn-outline-dark p-2 rounded-lg">カラム追加</button>
         </div>
     </div>

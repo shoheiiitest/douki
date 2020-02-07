@@ -28,6 +28,9 @@
         </li>
         @endforeach
         </ul>
+        <div class="m-4">
+            <button onclick="location.href='/'" class="btn-dark p-2 rounded-lg">戻る</button>
+        </div>
     </div>
 @endsection
 @section('script')
