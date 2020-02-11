@@ -11,6 +11,7 @@ var CtrSheets = new Vue({
         file_name:'',
         files:[],
         errors:[],
+        msg : '　',
         root:'testHot',
         hotSettings: {
             data: [],//Handsontable.helper.createSpreadsheetData(6, 10),
@@ -45,7 +46,7 @@ var CtrSheets = new Vue({
             }).catch(function (error) {
                 return error;
             });
-console.log(result);
+
             if(result.success){
                 this.hotSettings.colHeaders = result.headers;
                 for(var i=0; i<result.headers.length; i++){
@@ -111,7 +112,7 @@ console.log(result);
             if(result.success){
                 this.file_name = '';
                 this.files = [];
-                alert('成功でござる');
+                this.modal("保存成功でござる");
             }else if(result.message != undefined){
                 this.errors = result.message;
                 this.loading = false;
@@ -164,13 +165,46 @@ console.log(result);
             this.file_name = '';
             this.files = [];
             this.loading = false;
-            this.show = true;
+            // this.show = true;
+            this.modal("取り込みに成功しました(まだDBには保存されておりませぬ)");
             var handler = function(){CtrSheets.show = false};
             var r = setTimeout(handler,2000);
 
             // this.loading = false;
 
         },
+
+        modal(msg){
+            	//.modalについたhrefと同じidを持つ要素を探す
+            var modalThis = $('body').find("#demo1");
+            this.msg = msg;
+            //bodyの最下にwrapを作る 
+            $('body').append('<div id="modalWrap" />');
+            var wrap = $('#modalWrap'); wrap.fadeIn('200');
+            modalThis.fadeIn('200');
+            //モーダルの高さを取ってくる 
+            function mdlHeight() {
+                var wh = $(window).innerHeight();
+                var attH = modalThis.find('.modalInner').innerHeight();
+                modalThis.css({ height: attH });
+            }
+            mdlHeight();
+            $(window).on('resize', function () {
+                mdlHeight();
+            });
+            function clickAction() {
+                modalThis.fadeOut('200');
+                wrap.fadeOut('200', function () {
+                    wrap.remove();
+                });
+            }
+            //wrapクリックされたら 
+            wrap.on('click', function () {
+                clickAction(); return false;
+            });
+            //2秒後に消える 
+            setTimeout(clickAction.bind(this), 2000);
+        }
 
     },
 
