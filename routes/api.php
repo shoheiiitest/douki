@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('project/delete/', 'ProjectsController@delete');
+Route::post('projects/submit', 'ProjectsController@submit');
+
 Route::get('cases/getItems/{project_id}/{sheet_id}', 'TestcasesController@getItems');
 Route::get('projects/getItems/', 'ProjectsController@getItems');
 Route::get('{project_id}/headers/getItems/', 'HeadersController@getItems');
@@ -26,7 +29,7 @@ Route::post('headers/moveOrder/', 'HeadersController@moveOrder');
 Route::get('headers/getColTypes/{mode}/{header_id?}', 'HeadersController@getColTypes');
 Route::post('project/delete/', 'ProjectsController@delete');
 Route::post('cases/submit', 'TestcasesController@submit');
-Route::post('projects/submit', 'ProjectsController@submit');
+
 Route::post('headers/submit', 'HeadersController@submit');
 Route::post('sheets/submit', 'SheetsController@submit');
 Route::get('sheets/getItems/{mode}/{project_id}/{sheet_id?}', 'SheetsController@getItems');

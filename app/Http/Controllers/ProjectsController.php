@@ -91,13 +91,8 @@ class ProjectsController extends Controller
             $project->project_name = $project_name;
             $project->save();
 
-            if(!$project->save()){
-                return response()->json([
-                    'success' => false,
-                ]);
-            }
-
             $headers = config('params.headers.defaults');
+            $items_header_id = 0;
             foreach($headers as $i => $header){
                 $headerObj = new Header();
                 $headerObj->project_id = $project->id;
@@ -106,13 +101,21 @@ class ProjectsController extends Controller
                 $headerObj->order_num = $i+1;
                 $headerObj->disp_flg = 1;
                 $headerObj->save();
-
-                if(!$headerObj->save()){
-                    return response()->json([
-                        'success' => false,
-                    ]);
+                if($header['col_name']==="正常/異常"){
+                    $items_header_id = $headerObj->id;
                 }
             }
+            
+            for($i=0; $i<2; $i++){
+                $item = new Item();
+                $item->project_id = $project->id;
+                $item->header_id = $items_header_id;
+                $item->item_name = ($i==0) ? "正常" : "異常";
+                $item->order_num = $i+1;
+                $item->save();
+
+            }
+
 
             DB::commit();
 

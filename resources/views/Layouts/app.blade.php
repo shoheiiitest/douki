@@ -42,21 +42,18 @@
             .position-ref {
                 position: relative;
             }
-
-        @yield('style')
-        @yield('css')
+            /* @yield('style') */
     </style>
 </head>
 <body>
     @auth
-        <div class="py-3 mt-3 mb-1 bg-info text-white">
-            <h1 class="text-center">@yield('title')</h1>
-        </div>
-            <div class="top-right links">
-                    <div class="text-right">
-                        <button onclick="location.href='/logout'" class="btn btn-dark mr-2">ログアウト</button>
-                    </div>
+        <div class="py-1 mt-1 mb-5 bg-info text-white">
+            <h1 class="text-center pt-3">@yield('title')</h1>
+            <div class="text-right">
+                <span class="text-right pr-5">ユーザ名： {{ Auth::user()['name'] }}</span>
+                <button onclick="location.href='/logout'" class="btn btn-dark mr-3 mb-1">ログアウト</button>
             </div>
+        </div>
     @else
                         <div class="top-right links">
                     <div class="text-right">
