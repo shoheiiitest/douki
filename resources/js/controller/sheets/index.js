@@ -7,6 +7,7 @@ var CtrSheets = new Vue({
         file_name:'',
         files:[],
         sheet_name:'',
+        msg:"　",
         errors:[],
     },
     methods:{
@@ -26,13 +27,13 @@ var CtrSheets = new Vue({
             });
 
             if(result.success = true){
-                alert('success');
                 this.loading = false;
-                this.show = true;
-                var handler = function(){CtrSheets.show = false};
-                var r = setTimeout(handler,2000);
+                this.modal("取込成功じゃよ！");
+                setTimeout(() => {
+                    location.href="/sheets/"+ project_id
+                }, 2000);
             }else{
-                alert('失敗じゃよ');
+                alert('失敗じゃよん');
             }
 
         },
@@ -41,6 +42,38 @@ var CtrSheets = new Vue({
             console.log(e);
             this.file_name = e.target.files[0].name;
             this.files = e.target.files[0];
+        },
+
+        modal(msg){
+            //.modalについたhrefと同じidを持つ要素を探す
+                var modalThis = $('body').find("#demo1");
+                this.msg = msg;
+                //bodyの最下にwrapを作る 
+                $('body').append('<div id="modalWrap" />');
+                var wrap = $('#modalWrap'); wrap.fadeIn('200');
+                modalThis.fadeIn('200');
+                //モーダルの高さを取ってくる 
+                function mdlHeight() {
+                    var wh = $(window).innerHeight();
+                    var attH = modalThis.find('.modalInner').innerHeight();
+                    modalThis.css({ height: attH });
+                }
+                mdlHeight();
+                $(window).on('resize', function () {
+                    mdlHeight();
+                });
+                function clickAction() {
+                    modalThis.fadeOut('200');
+                    wrap.fadeOut('200', function () {
+                        wrap.remove();
+                    });
+                }
+                //wrapクリックされたら 
+                wrap.on('click', function () {
+                    clickAction(); return false;
+                });
+                //2秒後に消える 
+                setTimeout(clickAction.bind(this), 2000);
         },
 
     },
