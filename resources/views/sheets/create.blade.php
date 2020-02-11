@@ -2,6 +2,11 @@
 @section('title',$title)
 @section('content')
     <div id="CtrSheets">
+        <div class="modalBox" id="demo1">
+            <div class="modalInner">
+              @{{msg}}
+            </div>
+        </div>
         <rise-loader :loading="loading"></rise-loader>
         <div v-cloak v-if="show" class="success-message-bg">
             <transition name="slideY" appear>
