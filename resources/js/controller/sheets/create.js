@@ -113,6 +113,7 @@ var CtrSheets = new Vue({
                 this.file_name = '';
                 this.files = [];
                 this.modal("保存成功でござる");
+                this.errors = [];
             }else if(result.message != undefined){
                 this.errors = result.message;
                 this.loading = false;
@@ -122,6 +123,14 @@ var CtrSheets = new Vue({
             }
             this.loading = false;
 
+        },
+
+        addRow(){console.log("aaa");
+            this.hotSettings.data.push([]);
+        },
+
+        deleteRow(){
+            this.hotSettings.data.pop();
         },
 
         async exportSheet(project_id,sheet_id){

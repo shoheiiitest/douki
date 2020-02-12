@@ -3,10 +3,10 @@
 @section('content')
     <div id="CtrSheets">
         <rise-loader :loading="loading"></rise-loader>
-        <div v-cloak v-if="show" class="success-message-bg">
-            <transition name="slideY" appear>
-                <h3 class="text-center success-message">保存に成功しました</h3>
-            </transition>
+        <div class="modalBox" id="demo1">
+            <div class="modalInner">
+              @{{msg}}
+            </div>
         </div>
         <div class="m-4">
             <button onclick="location.href='/sheets/create/{{ $project_id }}'" class="btn-info text-white p-2 rounded-lg">シート追加画面へ</button>

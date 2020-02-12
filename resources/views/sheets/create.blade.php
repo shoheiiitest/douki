@@ -36,8 +36,12 @@
                 <button @click="exportSheet('{{ $project_id }}','{{ $sheet_id }}')" class="btn-dark text-white p-2 rounded-lg float-right">DBから出力</button>
             @endif
         </div>
-        <div v-cloak class="mb-5" @keyup.ctrl.shift.83="submit('{{ $mode}}','{{ $project_id }}','{{ ($mode=='edit') ? $sheet_id:null }}')">
+        <div v-cloak class="mb-1" @keyup.ctrl.shift.83="submit('{{ $mode}}','{{ $project_id }}','{{ ($mode=='edit') ? $sheet_id:null }}')">
             <hot-table :root="root" :settings="hotSettings" ref="testHot"></hot-table>
+        </div>
+        <div class="pb-3 pr-3">
+            <i @click="deleteRow" class="fas fa-minus-circle fa-2x float-right handle"></i>
+            <i @click="addRow" class="fas fa-plus-circle fa-2x float-right handle"></i>
         </div>
         <div v-cloak class="m-4">
             <button onclick="location.href='/sheets/{{ $project_id }}'" class="btn-dark p-2 rounded-lg">戻る</button>
@@ -47,7 +51,6 @@
                 <button @click="submit('{{ $mode }}',{{ $project_id }},{{ $sheet_id }})" class="btn-info text-white p-2 rounded-lg">保存する</button>
             @endif
         </div>
-    </div>
 @endsection
 @section('style')
 @endsection
